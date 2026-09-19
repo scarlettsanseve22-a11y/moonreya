@@ -853,4 +853,1376 @@
     }
   </style>
   </head>
-  
+  <body>
+
+  <main class="page">
+
+    <header class="topbar">
+
+      <a
+        class="logo"
+        href="index.html"
+      >
+        Moon<span>reya</span> ✦
+      </a>
+
+      <a
+        class="back-home"
+        href="index.html"
+      >
+        ← Volver
+      </a>
+
+    </header>
+
+
+    <section
+      class="welcome"
+      id="welcomeSection"
+    >
+
+      <div class="welcome-card">
+
+        <p class="eyebrow">
+          Un pequeño viaje hacia ti
+        </p>
+
+        <h1>
+          Hay algo en ti que merece ser descubierto.
+        </h1>
+
+        <div
+          class="mascot-stage"
+          aria-hidden="true"
+        >
+
+          <div class="mascot-glow"></div>
+
+          <div
+            class="mascot excited"
+            id="welcomeMascot"
+          >
+
+            <div class="star-body"></div>
+
+            <div class="star-inner"></div>
+
+            <div class="star-shine"></div>
+
+            <div class="mini-moon"></div>
+
+            <div class="face">
+
+              <span class="eye left"></span>
+
+              <span class="eye right"></span>
+
+              <span class="cheek left"></span>
+
+              <span class="cheek right"></span>
+
+              <span class="mouth"></span>
+
+            </div>
+
+          </div>
+
+          <span class="sparkle one">
+            ✦
+          </span>
+
+          <span class="sparkle two">
+            ✧
+          </span>
+
+          <span class="sparkle three">
+            ✦
+          </span>
+
+        </div>
+
+
+        <h2>
+          ¿Quieres descubrir tu energía?
+        </h2>
+
+        <p class="welcome-text">
+          Responde unas pequeñas preguntas
+          y descubre qué energía refleja
+          más tu forma de ser.
+        </p>
+
+
+        <button
+          class="start-button"
+          id="startButton"
+          type="button"
+        >
+          Descubrir mi energía
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <section
+      class="quiz"
+      id="quizSection"
+      aria-live="polite"
+    >
+
+      <div class="quiz-intro">
+
+        <h2>
+          Vamos a descubrirla
+        </h2>
+
+        <p>
+          Elige la opción que más se parezca
+          a ti, sin pensarlo demasiado.
+        </p>
+
+      </div>
+
+
+      <div class="progress-wrap">
+
+        <div class="progress-top">
+
+          <span id="progressLabel">
+            Pregunta 1 de 8
+          </span>
+
+          <span id="progressPercent">
+            13%
+          </span>
+
+        </div>
+
+
+        <div
+          class="progress-track"
+          aria-hidden="true"
+        >
+
+          <div
+            class="progress-bar"
+            id="progressBar"
+          ></div>
+
+        </div>
+
+      </div>
+
+
+      <div
+        class="question-card"
+        id="questionCard"
+      >
+
+        <div
+          class="question-number"
+          id="questionNumber"
+        >
+          PREGUNTA 1
+        </div>
+
+
+        <h2
+          class="question-title"
+          id="questionTitle"
+        ></h2>
+
+
+        <div
+          class="answers"
+          id="answersContainer"
+        ></div>
+
+      </div>
+
+
+      <p class="quiz-tip">
+        Confía en tu primera elección.
+      </p>
+
+    </section>
+
+
+    <section
+      class="result"
+      id="resultSection"
+      aria-live="polite"
+    >
+
+      <div class="result-card">
+
+        <div class="result-label">
+          Tu energía de hoy
+        </div>
+
+
+        <div
+          class="mascot-stage result-mascot"
+          aria-hidden="true"
+        >
+
+          <div class="mascot-glow"></div>
+
+          <div
+            class="mascot happy"
+            id="resultMascot"
+          >
+
+            <div class="star-body"></div>
+
+            <div class="star-inner"></div>
+
+            <div class="star-shine"></div>
+
+            <div class="mini-moon"></div>
+
+            <div class="face">
+
+              <span class="eye left"></span>
+
+              <span class="eye right"></span>
+
+              <span class="cheek left"></span>
+
+              <span class="cheek right"></span>
+
+              <span class="mouth"></span>
+
+            </div>
+
+          </div>
+
+
+          <span class="sparkle one">
+            ✦
+          </span>
+
+          <span class="sparkle two">
+            ✧
+          </span>
+
+          <span class="sparkle three">
+            ✦
+          </span>
+
+        </div>
+
+
+        <h2 id="resultTitle">
+          Alma Lunar
+        </h2>
+
+
+        <p
+          class="result-subtitle"
+          id="resultSubtitle"
+        ></p>
+
+
+        <p
+          class="result-message"
+          id="resultMessage"
+        ></p>
+
+
+        <div
+          class="traits"
+          id="traitsContainer"
+        ></div>
+
+
+        <div
+          class="result-quote"
+          id="resultQuote"
+        ></div>
+
+
+        <div class="result-actions">
+
+          <button
+            class="action-main"
+            id="shareButton"
+            type="button"
+          >
+            Compartir mi resultado
+          </button>
+
+
+          <button
+            class="action-secondary"
+            id="restartButton"
+            type="button"
+          >
+            Volver a descubrirme
+          </button>
+
+
+          <a
+            class="action-secondary"
+            href="index.html"
+          >
+            Volver a Moonreya
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <div
+    class="celebration"
+    id="celebration"
+    aria-hidden="true"
+  ></div>
+    <script>
+
+  "use strict";
+
+
+  const questions = [
+
+    {
+      question:
+        "Cuando tienes un día libre, ¿qué te nace hacer?",
+
+      answers: [
+        {
+          text:
+            "Quedarme tranquila, escuchar música y pensar.",
+          type: "moon"
+        },
+
+        {
+          text:
+            "Probar algo nuevo solo por curiosidad.",
+          type: "star"
+        },
+
+        {
+          text:
+            "Pasarlo con alguien que quiero.",
+          type: "heart"
+        },
+
+        {
+          text:
+            "Perderme en una historia, idea o sueño.",
+          type: "dream"
+        }
+      ]
+    },
+
+
+    {
+      question:
+        "¿Qué ambiente te hace sentir más tú?",
+
+      answers: [
+        {
+          text:
+            "Noche tranquila, luces suaves y calma.",
+          type: "moon"
+        },
+
+        {
+          text:
+            "Un lugar lleno de detalles interesantes.",
+          type: "star"
+        },
+
+        {
+          text:
+            "Un espacio cálido donde pueda conectar.",
+          type: "heart"
+        },
+
+        {
+          text:
+            "Un rincón bonito que despierte mi imaginación.",
+          type: "dream"
+        }
+      ]
+    },
+
+
+    {
+      question:
+        "Cuando algo cambia de repente, normalmente…",
+
+      answers: [
+        {
+          text:
+            "Me detengo y observo antes de reaccionar.",
+          type: "moon"
+        },
+
+        {
+          text:
+            "Me da curiosidad descubrir qué pasará.",
+          type: "star"
+        },
+
+        {
+          text:
+            "Pienso primero en las personas involucradas.",
+          type: "heart"
+        },
+
+        {
+          text:
+            "Imagino muchas posibilidades distintas.",
+          type: "dream"
+        }
+      ]
+    },
+
+
+    {
+      question:
+        "¿Qué detalle pequeño puede mejorar mucho tu día?",
+
+      answers: [
+        {
+          text:
+            "Un momento de paz sin que nadie me apure.",
+          type: "moon"
+        },
+
+        {
+          text:
+            "Encontrar algo nuevo que me sorprenda.",
+          type: "star"
+        },
+
+        {
+          text:
+            "Un mensaje bonito de alguien especial.",
+          type: "heart"
+        },
+
+        {
+          text:
+            "Una idea que me haga soñar despierta.",
+          type: "dream"
+        }
+      ]
+    },
+
+
+    {
+      question:
+        "Cuando eliges algo, ¿qué suele pesar más?",
+
+      answers: [
+        {
+          text:
+            "Lo que siento por dentro.",
+          type: "moon"
+        },
+
+        {
+          text:
+            "Las ganas de experimentar.",
+          type: "star"
+        },
+
+        {
+          text:
+            "Cómo hará sentir a los demás y a mí.",
+          type: "heart"
+        },
+
+        {
+          text:
+            "La emoción de imaginar lo que podría ser.",
+          type: "dream"
+        }
+      ]
+    },
+
+
+    {
+      question:
+        "¿Qué frase se parece más a tu forma de mirar la vida?",
+
+      answers: [
+        {
+          text:
+            "Hay cosas que se entienden mejor en silencio.",
+          type: "moon"
+        },
+
+        {
+          text:
+            "Siempre hay algo nuevo por descubrir.",
+          type: "star"
+        },
+
+        {
+          text:
+            "Las conexiones hacen especiales los momentos.",
+          type: "heart"
+        },
+
+        {
+          text:
+            "La imaginación puede llevarte muy lejos.",
+          type: "dream"
+        }
+      ]
+    },
+
+
+    {
+      question:
+        "¿Qué te atrae más de una persona nueva?",
+
+      answers: [
+        {
+          text:
+            "Su profundidad y la forma en que observa.",
+          type: "moon"
+        },
+
+        {
+          text:
+            "Su curiosidad y espontaneidad.",
+          type: "star"
+        },
+
+        {
+          text:
+            "Su calidez y manera de tratar a otros.",
+          type: "heart"
+        },
+
+        {
+          text:
+            "Su mundo interior y creatividad.",
+          type: "dream"
+        }
+      ]
+    },
+
+
+    {
+      question:
+        "Al terminar este pequeño viaje, ¿qué esperas encontrar?",
+
+      answers: [
+        {
+          text:
+            "Una parte de mí que a veces no escucho.",
+          type: "moon"
+        },
+
+        {
+          text:
+            "Una sorpresa que no esperaba.",
+          type: "star"
+        },
+
+        {
+          text:
+            "Algo que me haga sentir acompañada.",
+          type: "heart"
+        },
+
+        {
+          text:
+            "Una idea que pueda llevar conmigo.",
+          type: "dream"
+        }
+      ]
+    }
+
+  ];
+
+
+  const results = {
+
+    moon: {
+      title: "Alma Lunar",
+
+      subtitle:
+        "Profunda, observadora y sensible a los pequeños detalles.",
+
+      message:
+        "Sueles captar cosas que otras personas pasan por alto. Tu energía tiene algo sereno: observas, sientes y luego eliges.",
+
+      traits: [
+        "Intuitiva",
+        "Serena",
+        "Observadora",
+        "Profunda"
+      ],
+
+      quote:
+        "Tu calma también puede ser una forma de brillar."
+    },
+
+
+    star: {
+      title: "Estrella Curiosa",
+
+      subtitle:
+        "Espontánea, inquieta y siempre buscando algo nuevo.",
+
+      message:
+        "Tu curiosidad te empuja a explorar. Te gustan las sorpresas, los descubrimientos y esa sensación de estar a punto de encontrar algo que no conocías.",
+
+      traits: [
+        "Curiosa",
+        "Espontánea",
+        "Valiente",
+        "Exploradora"
+      ],
+
+      quote:
+        "Seguir tu curiosidad también es seguir una estrella."
+    },
+
+
+    heart: {
+      title: "Corazón Brillante",
+
+      subtitle:
+        "Cálida, conectada y muy atenta a lo que sienten los demás.",
+
+      message:
+        "Para ti, los momentos cobran fuerza cuando se comparten. Tu manera de cuidar los vínculos puede convertir algo sencillo en un recuerdo que permanece.",
+
+      traits: [
+        "Cálida",
+        "Empática",
+        "Leal",
+        "Cercana"
+      ],
+
+      quote:
+        "Hay personas que iluminan una habitación solo con estar."
+    },
+
+
+    dream: {
+      title: "Aura Soñadora",
+
+      subtitle:
+        "Imaginativa, creativa y capaz de ver posibilidades donde otros no las ven.",
+
+      message:
+        "Tu mente encuentra caminos alternativos. Las ideas, historias y posibilidades tienen un lugar especial en tu mundo.",
+
+      traits: [
+        "Creativa",
+        "Imaginativa",
+        "Soñadora",
+        "Original"
+      ],
+
+      quote:
+        "A veces, primero se sueña y después se descubre el camino."
+    }
+
+  };
+
+
+  const welcomeSection =
+    document.getElementById(
+      "welcomeSection"
+    );
+
+
+  const quizSection =
+    document.getElementById(
+      "quizSection"
+    );
+
+
+  const resultSection =
+    document.getElementById(
+      "resultSection"
+    );
+
+
+  const startButton =
+    document.getElementById(
+      "startButton"
+    );
+
+
+  const progressLabel =
+    document.getElementById(
+      "progressLabel"
+    );
+
+
+  const progressPercent =
+    document.getElementById(
+      "progressPercent"
+    );
+
+
+  const progressBar =
+    document.getElementById(
+      "progressBar"
+    );
+
+
+  const questionNumber =
+    document.getElementById(
+      "questionNumber"
+    );
+
+
+  const questionTitle =
+    document.getElementById(
+      "questionTitle"
+    );
+
+
+  const answersContainer =
+    document.getElementById(
+      "answersContainer"
+    );
+
+
+  const questionCard =
+    document.getElementById(
+      "questionCard"
+    );
+
+
+  const resultTitle =
+    document.getElementById(
+      "resultTitle"
+    );
+
+
+  const resultSubtitle =
+    document.getElementById(
+      "resultSubtitle"
+    );
+
+
+  const resultMessage =
+    document.getElementById(
+      "resultMessage"
+    );
+
+
+  const traitsContainer =
+    document.getElementById(
+      "traitsContainer"
+    );
+
+
+  const resultQuote =
+    document.getElementById(
+      "resultQuote"
+    );
+
+
+  const shareButton =
+    document.getElementById(
+      "shareButton"
+    );
+
+
+  const restartButton =
+    document.getElementById(
+      "restartButton"
+    );
+
+
+  const celebration =
+    document.getElementById(
+      "celebration"
+    );
+
+
+  const welcomeMascot =
+    document.getElementById(
+      "welcomeMascot"
+    );
+
+
+  const resultMascot =
+    document.getElementById(
+      "resultMascot"
+    );
+
+
+  let currentQuestion = 0;
+
+  let answers = [];
+
+
+  function updateMascot(state) {
+
+    const mascots = [
+      welcomeMascot,
+      resultMascot
+    ];
+
+
+    mascots.forEach(
+      function(mascot) {
+
+        if (!mascot) {
+          return;
+        }
+
+
+        mascot.classList.remove(
+          "excited",
+          "thinking",
+          "happy"
+        );
+
+
+        mascot.classList.add(state);
+
+      }
+    );
+
+  }
+
+
+  function startQuiz() {
+
+    currentQuestion = 0;
+
+    answers = [];
+
+
+    welcomeSection.style.display =
+      "none";
+
+
+    quizSection.classList.add(
+      "visible"
+    );
+
+
+    resultSection.classList.remove(
+      "visible"
+    );
+
+
+    updateMascot("excited");
+
+
+    renderQuestion();
+
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+
+  }
+
+
+  function renderQuestion() {
+
+    const item =
+      questions[currentQuestion];
+
+
+    const number =
+      currentQuestion + 1;
+
+
+    const percent =
+      Math.round(
+        (number / questions.length) * 100
+      );
+
+
+    progressLabel.textContent =
+      "Pregunta " +
+      number +
+      " de " +
+      questions.length;
+
+
+    progressPercent.textContent =
+      percent + "%";
+
+
+    progressBar.style.width =
+      percent + "%";
+
+
+    questionNumber.textContent =
+      "PREGUNTA " +
+      number;
+
+
+    questionTitle.textContent =
+      item.question;
+
+
+    answersContainer.innerHTML =
+      "";
+
+
+    item.answers.forEach(
+      function(answer, index) {
+
+        const button =
+          document.createElement(
+            "button"
+          );
+
+
+        button.type = "button";
+
+        button.className = "answer";
+
+
+        button.innerHTML =
+          '<span class="answer-inner">' +
+            '<span class="answer-dot">' +
+              String.fromCharCode(
+                65 + index
+              ) +
+            '</span>' +
+
+            '<span class="answer-text"></span>' +
+
+            '<span class="answer-arrow">' +
+              '→' +
+            '</span>' +
+
+          '</span>';
+
+
+        button.querySelector(
+          ".answer-text"
+        ).textContent =
+          answer.text;
+
+
+        button.addEventListener(
+          "click",
+          function() {
+            chooseAnswer(
+              answer.type
+            );
+          }
+        );
+
+
+        answersContainer.appendChild(
+          button
+        );
+
+      }
+    );
+
+
+    questionCard.classList.remove(
+      "change"
+    );
+
+
+    void questionCard.offsetWidth;
+
+
+    questionCard.classList.add(
+      "change"
+    );
+
+
+    updateMascot(
+      currentQuestion === 0
+        ? "excited"
+        : "thinking"
+    );
+
+  }
+
+
+  function chooseAnswer(type) {
+
+    answers.push(type);
+
+
+    const buttons =
+      answersContainer.querySelectorAll(
+        "button"
+      );
+
+
+    buttons.forEach(
+      function(button) {
+        button.disabled = true;
+      }
+    );
+
+
+    updateMascot("happy");
+
+
+    setTimeout(
+      function() {
+
+        currentQuestion += 1;
+
+
+        if (
+          currentQuestion <
+          questions.length
+        ) {
+
+          renderQuestion();
+
+        } else {
+
+          showResult();
+
+        }
+
+      },
+      350
+    );
+
+  }
+
+
+  function getResultType() {
+
+    const counts = {
+      moon: 0,
+      star: 0,
+      heart: 0,
+      dream: 0
+    };
+
+
+    answers.forEach(
+      function(type) {
+        counts[type] += 1;
+      }
+    );
+
+
+    const order = [
+      "moon",
+      "star",
+      "heart",
+      "dream"
+    ];
+
+
+    let best = order[0];
+
+
+    order.forEach(
+      function(type) {
+
+        if (
+          counts[type] >
+          counts[best]
+        ) {
+          best = type;
+        }
+
+      }
+    );
+
+
+    return best;
+
+  }
+
+
+  function showResult() {
+
+    const type =
+      getResultType();
+
+
+    const data =
+      results[type];
+
+
+    resultTitle.textContent =
+      data.title;
+
+
+    resultSubtitle.textContent =
+      data.subtitle;
+
+
+    resultMessage.textContent =
+      data.message;
+
+
+    resultQuote.textContent =
+      "“" +
+      data.quote +
+      "”";
+
+
+    traitsContainer.innerHTML =
+      "";
+
+
+    data.traits.forEach(
+      function(trait) {
+
+        const span =
+          document.createElement(
+            "span"
+          );
+
+
+        span.className =
+          "trait";
+
+
+        span.textContent =
+          trait;
+
+
+        traitsContainer.appendChild(
+          span
+        );
+
+      }
+    );
+
+
+    quizSection.classList.remove(
+      "visible"
+    );
+
+
+    resultSection.classList.add(
+      "visible"
+    );
+
+
+    updateMascot("happy");
+
+
+    launchCelebration();
+
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+
+  }
+
+
+  function restartQuiz() {
+
+    resultSection.classList.remove(
+      "visible"
+    );
+
+
+    welcomeSection.style.display =
+      "none";
+
+
+    quizSection.classList.add(
+      "visible"
+    );
+
+
+    currentQuestion = 0;
+
+    answers = [];
+
+
+    renderQuestion();
+
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+
+  }
+
+
+  function shareResult() {
+
+    const text =
+      "Mi energía en Moonreya es " +
+      resultTitle.textContent +
+      ". Descubre la tuya ✦";
+
+
+    if (
+      navigator.share
+    ) {
+
+      navigator.share({
+        title:
+          "Mi resultado en Moonreya",
+
+        text:
+          text,
+
+        url:
+          window.location.href
+
+      }).catch(
+        function() {}
+      );
+
+
+      return;
+    }
+
+
+    if (
+      navigator.clipboard
+    ) {
+
+      navigator.clipboard.writeText(
+        text +
+        " " +
+        window.location.href
+      ).then(
+        function() {
+
+          shareButton.textContent =
+            "¡Resultado copiado!";
+
+          setTimeout(
+            function() {
+
+              shareButton.textContent =
+                "Compartir mi resultado";
+
+            },
+            1800
+          );
+
+        }
+      );
+
+      return;
+    }
+
+
+    alert(
+      "Copia el enlace de Moonreya para compartir tu resultado."
+    );
+
+  }
+
+
+  function launchCelebration() {
+
+    celebration.innerHTML =
+      "";
+
+
+    const pieces = [
+      "#c3a9ed",
+      "#f0b5d4",
+      "#a9d9ed",
+      "#ffe59b",
+      "#fff5d8"
+    ];
+
+
+    for (
+      let i = 0;
+      i < 24;
+      i++
+    ) {
+
+      const piece =
+        document.createElement(
+          "span"
+        );
+
+
+      piece.className =
+        "confetti";
+
+
+      piece.style.left =
+        Math.random() * 100 +
+        "%";
+
+
+      piece.style.background =
+        pieces[
+          i % pieces.length
+        ];
+
+
+      piece.style.animationDelay =
+        Math.random() * 0.45 +
+        "s";
+
+
+      celebration.appendChild(
+        piece
+      );
+
+    }
+
+
+    setTimeout(
+      function() {
+
+        celebration.innerHTML =
+          "";
+
+      },
+      2300
+    );
+
+  }
+
+
+  startButton.onclick =
+    startQuiz;
+
+
+  restartButton.onclick =
+    restartQuiz;
+
+
+  shareButton.onclick =
+    shareResult;
+
+
+  updateMascot(
+    "excited"
+  );
+
+
+  console.log(
+    "Moonreya Descubre está funcionando."
+  );
+
+</script>
+
+
+</body>
+
+  </html>
