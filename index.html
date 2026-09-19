@@ -1,1 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <title>Moonreya ✦</title>
+
+  <meta
+    name="description"
+    content="Moonreya — un universo para descubrir, jugar y compartir."
+  >
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background:
+        radial-gradient(circle at 20% 20%, #f7d9ff 0%, transparent 30%),
+        radial-gradient(circle at 80% 10%, #d9e9ff 0%, transparent 30%),
+        linear-gradient(160deg, #fff8fc, #eee9ff);
+      color: #3d3150;
+      overflow-x: hidden;
+    }
+
+    .stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .star {
+      position: absolute;
+      font-size: 18px;
+      animation: twinkle 2.5s infinite ease-in-out;
+      opacity: 0.65;
+    }
+
+    .star:nth-child(1) {
+      top: 12%;
+      left: 12%;
+    }
+
+    .star:nth-child(2) {
+      top: 20%;
+      right: 15%;
+      animation-delay: 0.8s;
+    }
+
+    .star:nth-child(3) {
+      top: 45%;
+      left: 8%;
+      animation-delay: 1.4s;
+    }
+
+    .star:nth-child(4) {
+      bottom: 20%;
+      right: 12%;
+      animation-delay: 0.5s;
+    }
+
+    @keyframes twinkle {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 0.35;
+      }
+
+      50% {
+        transform: scale(1.35);
+        opacity: 1;
+      }
+    }
+
+    header {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 35px 20px 15px;
+    }
+
+    .brand {
+      font-size: 42px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .brand span {
+      color: #9d75d8;
+    }
+
+    .tagline {
+      margin-top: 8px;
+      font-size: 16px;
+      opacity: 0.75;
+    }
+
+    .hero {
+      position: relative;
+      z-index: 2;
+      max-width: 850px;
+      margin: 25px auto;
+      padding: 25px 20px;
+      text-align: center;
+    }
+
+    .mascot {
+      width: 115px;
+      height: 115px;
+      margin: 0 auto 20px;
+      border-radius: 38% 62% 55% 45%;
+      background: linear-gradient(145deg, #fff7a8, #ffdff4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 62px;
+      box-shadow: 0 15px 35px rgba(125, 91, 170, 0.2);
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0) rotate(-2deg);
+      }
+
+      50% {
+        transform: translateY(-12px) rotate(2deg);
+      }
+    }
+
+    .bubble {
+      display: inline-block;
+      max-width: 360px;
+      padding: 13px 18px;
+      background: white;
+      border-radius: 22px;
+      box-shadow: 0 8px 25px rgba(80, 55, 110, 0.12);
+      margin-bottom: 25px;
+      font-size: 15px;
+    }
+
+    h1 {
+      font-size: clamp(32px, 7vw, 55px);
+      line-height: 1.05;
+      margin-bottom: 15px;
+    }
+
+    .intro {
+      max-width: 600px;
+      margin: 0 auto 28px;
+      font-size: 17px;
+      line-height: 1.6;
+      opacity: 0.82;
+    }
+
+    .categories {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 0 20px 40px;
+    }
+
+    .card {
+      border: none;
+      border-radius: 24px;
+      padding: 23px 15px;
+      background: rgba(255, 255, 255, 0.8);
+      color: #3d3150;
+      box-shadow: 0 10px 25px rgba(80, 55, 110, 0.1);
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      font-size: 16px;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(80, 55, 110, 0.16);
+    }
+
+    .card .icon {
+      display: block;
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+
+    footer {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 25px;
+      font-size: 13px;
+      opacity: 0.6;
+    }
+
+    @media (max-width: 500px) {
+      .brand {
+        font-size: 36px;
+      }
+
+      .categories {
+        grid-template-columns: 1fr;
+      }
+
+      .mascot {
+        width: 100px;
+        height: 100px;
+        font-size: 52px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="stars">
+    <div class="star">✦</div>
+    <div class="star">✧</div>
+    <div class="star">✦</div>
+    <div class="star">✧</div>
+  </div>
+
+  <header>
+    <div class="brand">
+      Moon<span>reya</span> ✦
+    </div>
+
+    <div class="tagline">
+      Un pequeño universo para descubrir, jugar y compartir.
+    </div>
+  </header>
+
+  <main>
+
+    <section class="hero">
+
+      <div class="mascot">
+        ⭐
+      </div>
+
+      <div class="bubble">
+        Hola, ¿qué quieres descubrir hoy? ✨
+      </div>
+
+      <h1>
+        Entra a<br>
+        Moonreya
+      </h1>
+
+      <p class="intro">
+        Explora tu personalidad, juega, descubre cosas inesperadas
+        sobre ti y encuentra experiencias que querrás compartir.
+      </p>
+
+    </section>
+
+    <section class="categories">
+
+      <button class="
