@@ -1213,4 +1213,349 @@
       }
 
       .topbar {
-        margin-botto
+        margin-bottom: 5px;
+}
+
+.logo {
+  font-size: 1.05rem;
+}
+
+.back-home {
+  font-size: .82rem;
+}
+
+.welcome {
+  min-height: calc(100vh - 55px);
+  padding-top: 10px;
+}
+
+.welcome-card {
+  padding: 27px 15px 24px;
+  border-radius: 27px;
+}
+
+.mascot-stage {
+  width: 190px;
+  height: 190px;
+}
+
+.mascot {
+  width: 125px;
+  height: 125px;
+}
+
+.face {
+  top: 56px;
+}
+
+.mini-moon {
+  right: 24px;
+  top: 23px;
+}
+
+.welcome h1 {
+  letter-spacing: -1.4px;
+}
+
+.primary-button {
+  width: 100%;
+  min-width: 0;
+}
+
+.question-card {
+  padding: 24px 15px 19px;
+}
+
+.result-card {
+  padding: 30px 15px 22px;
+    }}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+  <div class="background-orb orb-one" aria-hidden="true"></div>
+  <div class="background-orb orb-two" aria-hidden="true"></div>
+  <div class="background-orb orb-three" aria-hidden="true"></div>
+
+  <main class="page">
+
+    <header class="topbar">
+
+      <a
+        class="logo"
+        href="index.html"
+        aria-label="Volver a Moonreya"
+      >
+        Moon<span>reya</span> ✦
+      </a>
+
+      <a
+        class="back-home"
+        href="index.html"
+      >
+        ← Volver a Moonreya
+      </a>
+
+    </header>
+
+    <section
+      class="welcome"
+      id="welcomeSection"
+    >
+
+      <div class="welcome-card">
+
+        <div class="eyebrow">
+          <span class="eyebrow-dot"></span>
+          Una experiencia de Moonreya
+        </div>
+
+        <div
+          class="mascot-stage"
+          aria-hidden="true"
+        >
+
+          <div class="mascot-glow"></div>
+
+          <div
+            class="mascot"
+            id="welcomeMascot"
+          >
+
+            <div class="star-body"></div>
+            <div class="star-inner"></div>
+            <div class="star-shine"></div>
+            <div class="mini-moon"></div>
+
+            <div class="face">
+              <span class="eye left"></span>
+              <span class="eye right"></span>
+              <span class="cheek left"></span>
+              <span class="cheek right"></span>
+              <span class="mouth"></span>
+            </div>
+
+          </div>
+
+          <span class="sparkle one">✦</span>
+          <span class="sparkle two">✧</span>
+          <span class="sparkle three">✦</span>
+
+        </div>
+
+        <h1>
+          Hay algo en ti que merece ser
+          <span class="soft">descubierto.</span>
+        </h1>
+
+        <p class="welcome-text">
+          Responde unas preguntas sencillas y deja que tu forma de elegir
+          revele qué energía está brillando más en ti hoy.
+        </p>
+
+        <p class="tiny-note">
+          No hay respuestas correctas. Solo respuestas tuyas.
+        </p>
+
+        <button
+          class="primary-button"
+          id="startButton"
+          type="button"
+        >
+          <span class="button-star">✦</span>
+          Descubrir mi energía
+        </button>
+
+      </div>
+
+    </section>    <section
+      class="quiz"
+      id="quizSection"
+      aria-live="polite"
+    >
+
+      <div class="quiz-intro">
+
+        <h2>Vamos a descubrirla</h2>
+
+        <p>
+          Elige la opción que más se parezca a ti,
+          sin pensarlo demasiado.
+        </p>
+
+      </div>
+
+      <div class="progress-wrap">
+
+        <div class="progress-top">
+
+          <span id="progressLabel">
+            Pregunta 1 de 8
+          </span>
+
+          <span id="progressPercent">
+            13%
+          </span>
+
+        </div>
+
+        <div
+          class="progress-track"
+          aria-hidden="true"
+        >
+
+          <div
+            class="progress-bar"
+            id="progressBar"
+          ></div>
+
+        </div>
+
+      </div>
+
+      <div
+        class="question-card"
+        id="questionCard"
+      >
+
+        <div
+          class="question-number"
+          id="questionNumber"
+        >
+          PREGUNTA 1
+        </div>
+
+        <h2
+          class="question-title"
+          id="questionTitle"
+        ></h2>
+
+        <div
+          class="answers"
+          id="answersContainer"
+        ></div>
+
+      </div>
+
+      <p class="quiz-tip">
+        Confía en tu primera elección.
+      </p>
+
+    </section>
+
+    <section
+      class="result"
+      id="resultSection"
+      aria-live="polite"
+    >
+
+      <div class="result-card">
+
+        <div class="result-label">
+          Tu energía de hoy
+        </div>
+
+        <div
+          class="mascot-stage result-mascot"
+          aria-hidden="true"
+        >
+
+          <div class="mascot-glow"></div>
+
+          <div
+            class="mascot happy"
+            id="resultMascot"
+          >
+
+            <div class="star-body"></div>
+            <div class="star-inner"></div>
+            <div class="star-shine"></div>
+            <div class="mini-moon"></div>
+
+            <div class="face">
+              <span class="eye left"></span>
+              <span class="eye right"></span>
+              <span class="cheek left"></span>
+              <span class="cheek right"></span>
+              <span class="mouth"></span>
+            </div>
+
+          </div>
+
+          <span class="sparkle one">✦</span>
+          <span class="sparkle two">✧</span>
+          <span class="sparkle three">✦</span>
+
+        </div>
+
+        <h2 id="resultTitle">
+          Alma Lunar
+        </h2>
+
+        <p
+          class="result-subtitle"
+          id="resultSubtitle"
+        ></p>
+
+        <p
+          class="result-message"
+          id="resultMessage"
+        ></p>
+
+        <div
+          class="traits"
+          id="traitsContainer"
+        ></div>
+
+        <div
+          class="result-quote"
+          id="resultQuote"
+        ></div>
+
+        <div class="result-actions">
+
+          <button
+            class="action-main"
+            id="shareButton"
+            type="button"
+          >
+            Compartir mi resultado
+          </button>
+
+          <button
+            class="action-secondary"
+            id="restartButton"
+            type="button"
+          >
+            Volver a descubrirme
+          </button>
+
+          <a
+            class="action-secondary"
+            href="index.html"
+          >
+            Volver a Moonreya
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+    
