@@ -931,3 +931,404 @@
 
             }
     
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <!-- =========================================
+       FONDO DECORATIVO
+       ========================================= -->
+
+  <div
+    class="background-stars"
+    aria-hidden="true"
+  >
+
+    <span>✦</span>
+    <span>✧</span>
+    <span>✦</span>
+    <span>✧</span>
+    <span>✦</span>
+
+  </div>
+
+
+  <!-- =========================================
+       CABECERA DE MOONREYA
+       ========================================= -->
+
+  <header>
+
+    <div class="logo">
+
+      Moon<span>reya</span>
+
+      <span class="logo-star">
+        ✦
+      </span>
+
+    </div>
+
+  </header>
+
+
+  <!-- =========================================
+       CONTENIDO PRINCIPAL
+       ========================================= -->
+
+  <main>
+
+
+    <!-- =======================================
+         HERO
+         ======================================= -->
+
+    <section class="hero">
+
+
+      <!-- ZONA DE LA ESTRELLA -->
+
+      <div class="mascot-zone">
+
+        <div
+          class="mascot-placeholder"
+          aria-label="Mascota de Moonreya"
+        ></div>
+
+      </div>
+
+
+      <!-- MENSAJE -->
+
+      <div class="star-bubble">
+
+        Mmm… tengo una idea.
+
+      </div>
+
+
+      <!-- TÍTULO -->
+
+      <h1>
+
+        Descubre algo<br>
+
+        <span class="highlight">
+          sobre ti.
+        </span>
+
+      </h1>
+
+
+      <!-- DESCRIPCIÓN -->
+
+      <p class="hero-text">
+
+        Entra a Moonreya, elige una experiencia
+        y descubre qué aparece.
+        Algunas respuestas quizá te sorprendan.
+
+      </p>
+
+
+      <!-- BOTÓN PRINCIPAL -->
+
+      <button
+        class="main-action"
+        onclick="goToDiscover()"
+      >
+
+        ✨ Descubrir algo sobre mí
+
+      </button>
+
+
+      <div class="action-subtext">
+
+        No sabes qué vas a encontrar.
+
+      </div>
+
+
+      <!-- BOTÓN SORPRÉNDEME -->
+
+      <button
+        class="surprise-button"
+        onclick="surpriseMe()"
+      >
+
+        🎲 Sorpréndeme
+
+      </button>
+
+
+    </section>
+
+
+    <!-- =======================================
+         EXPERIENCIAS
+         ======================================= -->
+
+    <section class="experiences">
+
+
+      <h2 class="section-title">
+
+        ¿Qué quieres hacer?
+
+      </h2>
+
+
+      <p class="section-description">
+
+        Elige cómo quieres pasar un rato
+        en Moonreya.
+
+      </p>
+
+
+      <div class="experience-grid">
+
+
+        <!-- DESCUBRE -->
+
+        <button
+          class="experience-card"
+          onclick="goToDiscover()"
+        >
+
+          <span class="experience-icon">
+            ✨
+          </span>
+
+
+          <h3>
+            Descubre
+          </h3>
+
+
+          <p>
+
+            Tests y experiencias para descubrir
+            cosas inesperadas sobre ti.
+
+          </p>
+
+        </button>
+
+
+        <!-- CONECTA -->
+
+        <button
+          class="experience-card"
+          onclick="comingSoon('Conecta')"
+        >
+
+          <span class="experience-icon">
+            💗
+          </span>
+
+
+          <h3>
+            Conecta
+          </h3>
+
+
+          <p>
+
+            Comparte y descubre qué tienen
+            en común contigo y otras personas.
+
+          </p>
+
+        </button>
+
+
+        <!-- JUEGOS -->
+
+        <button
+          class="experience-card"
+          onclick="comingSoon('Juegos')"
+        >
+
+          <span class="experience-icon">
+            🎮
+          </span>
+
+
+          <h3>
+            Juegos
+          </h3>
+
+
+          <p>
+
+            Juegos cortos para entrar,
+            jugar y volver a intentarlo.
+
+          </p>
+
+        </button>
+
+
+        <!-- MOONREYA DE HOY -->
+
+        <button
+          class="experience-card"
+          onclick="comingSoon('Moonreya de hoy')"
+        >
+
+          <span class="experience-icon">
+            🌙
+          </span>
+
+
+          <h3>
+            Moonreya de hoy
+          </h3>
+
+
+          <p>
+
+            Una experiencia diferente
+            para descubrir cada día.
+
+          </p>
+
+        </button>
+
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================
+         MOONREYA DE HOY
+         ======================================= -->
+
+    <section class="today">
+
+
+      <div class="today-box">
+
+
+        <span class="today-label">
+
+          Para ti
+
+        </span>
+
+
+        <h2>
+
+          Hay algo esperándote.
+
+        </h2>
+
+
+        <p>
+
+          Cada vez que vuelvas a Moonreya
+          podrás encontrar algo diferente.
+
+        </p>
+
+
+        <button
+          class="small-action"
+          onclick="surpriseMe()"
+        >
+
+          Ver qué hay
+
+        </button>
+
+
+      </div>
+
+
+    </section>
+
+      </main>
+
+
+  <!-- =========================================
+       PIE DE PÁGINA
+       ========================================= -->
+
+  <footer>
+
+    © 2026 Moonreya
+
+    <br>
+
+    Un universo para descubrir,
+    jugar y compartir.
+
+  </footer>
+
+
+  <!-- =========================================
+       JAVASCRIPT
+       ========================================= -->
+
+  <script>
+
+
+    /*
+      BOTÓN PRINCIPAL
+
+      Lleva a nuestro Descubre.html,
+      que ya tenemos funcionando.
+    */
+
+    function goToDiscover() {
+
+      window.location.href =
+        "Descubre.html";
+
+    }
+
+
+    /*
+      SORPRÉNDEME
+
+      Por ahora dirige a Descubre.
+      Más adelante haremos que Moonreya
+      elija aleatoriamente una experiencia.
+    */
+
+    function surpriseMe() {
+
+      window.location.href =
+        "Descubre.html";
+
+    }
+
+
+    /*
+      SECCIONES QUE TODAVÍA ESTÁN
+      EN CONSTRUCCIÓN
+    */
+
+    function comingSoon(section) {
+
+      alert(
+        section +
+        " está siendo preparado para Moonreya ✨"
+      );
+
+    }
+
+
+  </script>
+
+
+</body>
+
+</html>
