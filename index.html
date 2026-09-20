@@ -930,7 +930,199 @@
       }
 
             }
-    
+    /* =========================================
+   ESTRELLA ANIMADA DE MOONREYA
+   ========================================= */
+
+.moonreya-mascot {
+  position: relative;
+  width: min(270px, 58vw);
+  height: min(270px, 58vw);
+  margin: 10px auto 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  pointer-events: none;
+
+  /* Entrada inicial */
+  animation: moonreyaStarEntrance 1.2s cubic-bezier(.22,.61,.36,1) both;
+}
+
+.moonreya-star {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+
+  filter:
+    drop-shadow(0 12px 18px rgba(88, 48, 145, .16))
+    drop-shadow(0 0 12px rgba(255, 220, 115, .16));
+
+  transform-origin: center center;
+
+  /* Movimiento continuo */
+  animation: moonreyaStarFloat 4.5s ease-in-out infinite;
+
+  will-change: transform;
+}
+
+/* -----------------------------------------
+   ENTRADA
+   ----------------------------------------- */
+
+@keyframes moonreyaStarEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(35px) scale(.72) rotate(-8deg);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translateY(-7px) scale(1.04) rotate(2deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+}
+
+/* -----------------------------------------
+   FLOTACIÓN SUAVE
+   ----------------------------------------- */
+
+@keyframes moonreyaStarFloat {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-1.5deg);
+  }
+
+  25% {
+    transform: translateY(-5px) rotate(1deg);
+  }
+
+  50% {
+    transform: translateY(-11px) rotate(2deg);
+  }
+
+  75% {
+    transform: translateY(-5px) rotate(-1deg);
+  }
+}
+
+/* -----------------------------------------
+   BURBUJA DE LA ESTRELLA
+   ----------------------------------------- */
+
+.star-speech {
+  position: absolute;
+  right: -20px;
+  top: 5px;
+
+  max-width: 155px;
+
+  padding: 10px 14px;
+
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, .90);
+
+  color: #54278c;
+
+  font-size: .85rem;
+  line-height: 1.3;
+  text-align: center;
+
+  box-shadow:
+    0 8px 25px rgba(83, 48, 140, .12);
+
+  opacity: 0;
+
+  transform:
+    translateY(8px)
+    scale(.94);
+
+  animation:
+    moonreyaSpeechAppear
+    .9s ease
+    1.35s
+    forwards;
+
+  pointer-events: none;
+}
+
+.star-speech::after {
+  content: "";
+
+  position: absolute;
+
+  left: 22px;
+  bottom: -7px;
+
+  width: 15px;
+  height: 15px;
+
+  background: rgba(255, 255, 255, .90);
+
+  transform: rotate(45deg);
+}
+
+@keyframes moonreyaSpeechAppear {
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+/* -----------------------------------------
+   CELULAR
+   ----------------------------------------- */
+
+@media (max-width: 600px) {
+
+  .moonreya-mascot {
+    width: min(230px, 58vw);
+    height: min(230px, 58vw);
+    margin-bottom: 18px;
+  }
+
+  .star-speech {
+    right: -8px;
+    top: -5px;
+
+    max-width: 135px;
+
+    padding: 8px 11px;
+
+    font-size: .78rem;
+  }
+}
+
+/* -----------------------------------------
+   MENOS MOVIMIENTO SI EL USUARIO LO PREFIERE
+   ----------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .moonreya-mascot,
+  .moonreya-star,
+  .star-speech {
+    animation: none;
+  }
+
+  .moonreya-mascot {
+    opacity: 1;
+  }
+
+  .star-speech {
+    opacity: 1;
+    transform: none;
+  }
+      }
   </style>
 
 </head>
