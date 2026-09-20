@@ -1,304 +1,933 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Moonreya ✦</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-  <meta name="description" content="Moonreya — un universo para descubrir, jugar y compartir.">
+  <title>
+    Moonreya — descubre algo sobre ti
+  </title>
+
+  <meta
+    name="description"
+    content="Moonreya — un universo para descubrir, jugar y compartir."
+  >
 
   <style>
+
+    /* =========================================
+       CONFIGURACIÓN GENERAL
+       ========================================= */
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
-    body {
-      min-height: 100vh;
-      font-family: Arial, sans-serif;
-      background:
-        radial-gradient(circle at 20% 20%, #f7d9ff 0%, transparent 30%),
-        radial-gradient(circle at 80% 10%, #d9e9ff 0%, transparent 30%),
-        linear-gradient(160deg, #fff8fc, #eee9ff);
-      color: #3d3150;
-      overflow-x: hidden;
+    html {
+      scroll-behavior: smooth;
     }
 
-    .stars {
+    body {
+      min-height: 100vh;
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      color: #3d3150;
+
+      overflow-x: hidden;
+
+      background:
+        radial-gradient(
+          circle at 10% 5%,
+          rgba(255, 218, 244, 0.90),
+          transparent 28%
+        ),
+
+        radial-gradient(
+          circle at 90% 15%,
+          rgba(211, 226, 255, 0.90),
+          transparent 30%
+        ),
+
+        radial-gradient(
+          circle at 50% 100%,
+          rgba(238, 218, 255, 0.80),
+          transparent 35%
+        ),
+
+        linear-gradient(
+          160deg,
+          #fffafd 0%,
+          #f8f3ff 48%,
+          #f0f5ff 100%
+        );
+    }
+
+
+    /* =========================================
+       ESTRELLAS DECORATIVAS DEL FONDO
+       ========================================= */
+
+    .background-stars {
       position: fixed;
+
       inset: 0;
+
       pointer-events: none;
+
       overflow: hidden;
+
       z-index: 0;
     }
 
-    .star {
+    .background-stars span {
       position: absolute;
-      font-size: 18px;
-      animation: twinkle 2.5s infinite ease-in-out;
-      opacity: 0.65;
+
+      display: block;
+
+      font-size: 13px;
+
+      opacity: 0.45;
+
+      animation:
+        twinkle
+        3s
+        ease-in-out
+        infinite;
     }
 
-    .star:nth-child(1) {
-      top: 12%;
-      left: 12%;
-    }
-
-    .star:nth-child(2) {
-      top: 20%;
-      right: 15%;
-      animation-delay: 0.8s;
-    }
-
-    .star:nth-child(3) {
-      top: 45%;
+    .background-stars span:nth-child(1) {
+      top: 9%;
       left: 8%;
-      animation-delay: 1.4s;
     }
 
-    .star:nth-child(4) {
-      bottom: 20%;
-      right: 12%;
-      animation-delay: 0.5s;
+    .background-stars span:nth-child(2) {
+      top: 18%;
+      right: 10%;
+
+      animation-delay: 1s;
     }
+
+    .background-stars span:nth-child(3) {
+      top: 42%;
+      left: 5%;
+
+      animation-delay: 1.8s;
+    }
+
+    .background-stars span:nth-child(4) {
+      top: 65%;
+      right: 7%;
+
+      animation-delay: 0.6s;
+    }
+
+    .background-stars span:nth-child(5) {
+      bottom: 12%;
+      left: 17%;
+
+      animation-delay: 2s;
+    }
+
 
     @keyframes twinkle {
-      0%, 100% {
-        transform: scale(1);
-        opacity: 0.35;
+
+      0%,
+      100% {
+        opacity: 0.25;
+
+        transform:
+          scale(0.9);
       }
 
       50% {
-        transform: scale(1.35);
-        opacity: 1;
+        opacity: 0.8;
+
+        transform:
+          scale(1.25);
       }
+
     }
+
+
+    /* =========================================
+       CABECERA
+       ========================================= */
 
     header {
       position: relative;
-      z-index: 2;
+
+      z-index: 5;
+
+      padding:
+        25px
+        20px
+        10px;
+
       text-align: center;
-      padding: 35px 20px 15px;
     }
 
-    .brand {
-      font-size: 42px;
+    .logo {
+      display: inline-block;
+
+      font-size: 34px;
+
       font-weight: 800;
-      letter-spacing: -1px;
+
+      letter-spacing: -1.5px;
+
+      color: #3d3150;
     }
 
-    .brand span {
-      color: #9d75d8;
+    .logo span {
+      color: #9b72d4;
     }
 
-    .tagline {
-      margin-top: 8px;
-      font-size: 16px;
-      opacity: 0.75;
+    .logo-star {
+      color: #e8b94d;
+
+      font-size: 22px;
+
+      vertical-align: 5px;
     }
+
+
+    /* =========================================
+       HERO PRINCIPAL
+       ========================================= */
 
     .hero {
       position: relative;
+
       z-index: 2;
+
       max-width: 850px;
-      margin: 25px auto;
-      padding: 25px 20px;
+
+      margin:
+        0
+        auto;
+
+      padding:
+        25px
+        20px
+        55px;
+
       text-align: center;
     }
 
-    .mascot {
-      width: 115px;
-      height: 115px;
-      margin: 0 auto 20px;
-      border-radius: 38% 62% 55% 45%;
-      background: linear-gradient(145deg, #fff7a8, #ffdff4);
+
+    /* =========================================
+       ZONA RESERVADA PARA LA ESTRELLA
+       ========================================= */
+
+    .mascot-zone {
+      position: relative;
+
+      width:
+        min(
+          100%,
+          390px
+        );
+
+      height: 245px;
+
+      margin:
+        5px
+        auto
+        5px;
+
       display: flex;
-      align-items: center;
+
       justify-content: center;
-      font-size: 62px;
-      box-shadow: 0 15px 35px rgba(125, 91, 170, 0.2);
-      animation: float 3s ease-in-out infinite;
+
+      align-items: center;
     }
 
-    @keyframes float {
-      0%, 100% {
-        transform: translateY(0) rotate(-2deg);
+
+    /*
+      ESTA ES SOLAMENTE UNA ZONA TEMPORAL.
+
+      La estrella real de Moonreya se añadirá
+      posteriormente como imagen/asset.
+
+      No usaremos el emoji ⭐ como mascota.
+    */
+
+    .mascot-placeholder {
+      width: 145px;
+
+      height: 145px;
+
+      border-radius: 50%;
+
+      background:
+        radial-gradient(
+          circle at 35% 30%,
+          #fffde8,
+          #ffe99a 45%,
+          #f8c95e 100%
+        );
+
+      box-shadow:
+
+        0 18px 40px
+        rgba(
+          111,
+          82,
+          155,
+          0.16
+        ),
+
+        0 0 45px
+        rgba(
+          255,
+          222,
+          130,
+          0.35
+        );
+
+      animation:
+        mascotFloat
+        4s
+        ease-in-out
+        infinite;
+    }
+
+
+    @keyframes mascotFloat {
+
+      0%,
+      100% {
+
+        transform:
+          translateY(0)
+          rotate(-2deg);
+
       }
 
       50% {
-        transform: translateY(-12px) rotate(2deg);
+
+        transform:
+          translateY(-12px)
+          rotate(2deg);
+
       }
+
     }
 
-    .bubble {
-      display: inline-block;
-      max-width: 360px;
-      padding: 13px 18px;
-      background: white;
-      border-radius: 22px;
-      box-shadow: 0 8px 25px rgba(80, 55, 110, 0.12);
-      margin-bottom: 25px;
-      font-size: 15px;
-    }
 
-    h1 {
-      font-size: clamp(32px, 7vw, 55px);
-      line-height: 1.05;
-      margin-bottom: 15px;
-    }
+    /* =========================================
+       BURBUJA DE LA ESTRELLA
+       ========================================= */
 
-    .intro {
-      max-width: 600px;
-      margin: 0 auto 28px;
-      font-size: 17px;
-      line-height: 1.6;
-      opacity: 0.82;
-    }
-
-    .categories {
+    .star-bubble {
       position: relative;
-      z-index: 2;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
-      max-width: 700px;
-      margin: 0 auto;
-      padding: 0 20px 40px;
+
+      display: inline-block;
+
+      max-width: 330px;
+
+      padding:
+        13px
+        19px;
+
+      margin-bottom: 22px;
+
+      background:
+        rgba(
+          255,
+          255,
+          255,
+          0.88
+        );
+
+      border-radius: 20px;
+
+      box-shadow:
+        0 9px 28px
+        rgba(
+          80,
+          55,
+          110,
+          0.10
+        );
+
+      font-size: 15px;
+
+      line-height: 1.4;
     }
 
-    .card {
+
+    .star-bubble::after {
+      content: "";
+
+      position: absolute;
+
+      bottom: -7px;
+
+      left: 50%;
+
+      width: 14px;
+
+      height: 14px;
+
+      background:
+        rgba(
+          255,
+          255,
+          255,
+          0.88
+        );
+
+      transform:
+        translateX(-50%)
+        rotate(45deg);
+    }
+
+
+    /* =========================================
+       TÍTULO PRINCIPAL
+       ========================================= */
+
+    .hero h1 {
+
+      font-size:
+        clamp(
+          38px,
+          10vw,
+          64px
+        );
+
+      line-height: 1.02;
+
+      letter-spacing: -2px;
+
+      margin-bottom: 18px;
+    }
+
+
+    .hero h1 .highlight {
+      color: #9369cf;
+    }
+
+
+    .hero-text {
+
+      max-width: 570px;
+
+      margin:
+        0
+        auto
+        28px;
+
+      font-size: 17px;
+
+      line-height: 1.65;
+
+      color: #665a76;
+    }
+
+      /* =========================================
+       BOTÓN PRINCIPAL
+       ========================================= */
+
+    .main-action {
+
+      display: inline-flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      width:
+        min(
+          100%,
+          350px
+        );
+
+      padding:
+        17px
+        23px;
+
       border: none;
-      border-radius: 24px;
-      padding: 23px 15px;
-      background: rgba(255, 255, 255, 0.8);
-      color: #3d3150;
-      box-shadow: 0 10px 25px rgba(80, 55, 110, 0.1);
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+      border-radius: 18px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #9b72d4,
+          #b98ee7
+        );
+
+      color: #ffffff;
+
       font-size: 16px;
+
+      font-weight: 700;
+
+      cursor: pointer;
+
+      box-shadow:
+        0 12px 28px
+        rgba(
+          143,
+          102,
+          199,
+          0.28
+        );
+
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
     }
 
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 30px rgba(80, 55, 110, 0.16);
+
+    .main-action:hover {
+
+      transform:
+        translateY(-3px);
+
+      box-shadow:
+        0 16px 32px
+        rgba(
+          143,
+          102,
+          199,
+          0.34
+        );
     }
 
-    .card .icon {
-      display: block;
-      font-size: 32px;
+
+    .main-action:active {
+
+      transform:
+        scale(0.98);
+    }
+
+
+    .action-subtext {
+
+      margin-top: 10px;
+
+      font-size: 13px;
+
+      color: #82758f;
+    }
+
+
+    /* =========================================
+       BOTÓN "SORPRÉNDEME"
+       ========================================= */
+
+    .surprise-button {
+
+      display: inline-block;
+
+      margin-top: 17px;
+
+      border: none;
+
+      background: transparent;
+
+      color: #70528f;
+
+      font-size: 14px;
+
+      font-weight: 600;
+
+      cursor: pointer;
+    }
+
+
+    .surprise-button:hover {
+
+      text-decoration: underline;
+    }
+
+
+    /* =========================================
+       SECCIÓN DE EXPERIENCIAS
+       ========================================= */
+
+    .experiences {
+
+      position: relative;
+
+      z-index: 2;
+
+      max-width: 850px;
+
+      margin:
+        0
+        auto;
+
+      padding:
+        20px
+        20px
+        65px;
+    }
+
+
+    .section-title {
+
+      text-align: center;
+
+      font-size: 26px;
+
       margin-bottom: 8px;
     }
 
-    footer {
-      position: relative;
-      z-index: 2;
+
+    .section-description {
+
       text-align: center;
-      padding: 25px;
-      font-size: 13px;
-      opacity: 0.6;
+
+      color: #756a82;
+
+      font-size: 14px;
+
+      line-height: 1.5;
+
+      margin-bottom: 25px;
     }
 
-    @media (max-width: 500px) {
-      .brand {
-        font-size: 36px;
+
+    /* =========================================
+       CUADRÍCULA DE EXPERIENCIAS
+       ========================================= */
+
+    .experience-grid {
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(
+          2,
+          minmax(
+            0,
+            1fr
+          )
+        );
+
+      gap: 14px;
+    }
+
+
+    /* =========================================
+       TARJETA DE EXPERIENCIA
+       ========================================= */
+
+    .experience-card {
+
+      position: relative;
+
+      min-height: 175px;
+
+      padding:
+        22px
+        17px;
+
+      border:
+        1px solid
+        rgba(
+          255,
+          255,
+          255,
+          0.75
+        );
+
+      border-radius: 25px;
+
+      background:
+        rgba(
+          255,
+          255,
+          255,
+          0.72
+        );
+
+      color: #3d3150;
+
+      box-shadow:
+        0 10px 28px
+        rgba(
+          77,
+          55,
+          103,
+          0.08
+        );
+
+      cursor: pointer;
+
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+
+    .experience-card:hover {
+
+      transform:
+        translateY(-5px);
+
+      box-shadow:
+        0 15px 32px
+        rgba(
+          77,
+          55,
+          103,
+          0.13
+        );
+    }
+
+
+    .experience-icon {
+
+      display: block;
+
+      font-size: 30px;
+
+      margin-bottom: 13px;
+    }
+
+
+    .experience-card h3 {
+
+      font-size: 18px;
+
+      margin-bottom: 8px;
+    }
+
+
+    .experience-card p {
+
+      font-size: 13px;
+
+      line-height: 1.45;
+
+      color: #74697e;
+    }
+
+
+    /* =========================================
+       MOONREYA DE HOY
+       ========================================= */
+
+    .today {
+
+      position: relative;
+
+      z-index: 2;
+
+      max-width: 810px;
+
+      margin:
+        0
+        auto;
+
+      padding:
+        0
+        20px
+        65px;
+    }
+
+
+    .today-box {
+
+      padding:
+        27px
+        22px;
+
+      border-radius: 28px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(
+            255,
+            255,
+            255,
+            0.90
+          ),
+          rgba(
+            245,
+            238,
+            255,
+            0.86
+          )
+        );
+
+      box-shadow:
+        0 12px 32px
+        rgba(
+          75,
+          55,
+          100,
+          0.09
+        );
+
+      text-align: center;
+    }
+
+
+    .today-label {
+
+      display: inline-block;
+
+      margin-bottom: 10px;
+
+      font-size: 12px;
+
+      font-weight: 700;
+
+      letter-spacing: 1px;
+
+      text-transform: uppercase;
+
+      color: #9a75c9;
+    }
+
+
+    .today-box h2 {
+
+      font-size: 24px;
+
+      margin-bottom: 10px;
+    }
+
+
+    .today-box p {
+
+      max-width: 550px;
+
+      margin:
+        0
+        auto
+        18px;
+
+      color: #70647b;
+
+      line-height: 1.55;
+    }
+
+
+    .small-action {
+
+      border: none;
+
+      padding:
+        11px
+        17px;
+
+      border-radius: 14px;
+
+      background: #eee3fa;
+
+      color: #634581;
+
+      font-weight: 700;
+
+      cursor: pointer;
+    }
+
+
+    /* =========================================
+       PIE DE PÁGINA
+       ========================================= */
+
+    footer {
+
+      position: relative;
+
+      z-index: 2;
+
+      padding:
+        25px
+        20px
+        35px;
+
+      text-align: center;
+
+      font-size: 12px;
+
+      line-height: 1.6;
+
+      color: #877b91;
+    }
+
+
+    /* =========================================
+       AJUSTES PARA TELÉFONOS
+       ========================================= */
+
+    @media (max-width: 600px) {
+
+      header {
+
+        padding-top: 22px;
       }
 
-      .categories {
+
+      .logo {
+
+        font-size: 31px;
+      }
+
+
+      .hero {
+
+        padding-top: 10px;
+      }
+
+
+      .mascot-zone {
+
+        height: 215px;
+      }
+
+
+      .mascot-placeholder {
+
+        width: 125px;
+
+        height: 125px;
+      }
+
+
+      .hero h1 {
+
+        font-size: 43px;
+      }
+
+
+      .hero-text {
+
+        font-size: 16px;
+      }
+
+
+      .experience-grid {
+
         grid-template-columns: 1fr;
       }
 
-      .mascot {
-        width: 100px;
-        height: 100px;
-        font-size: 52px;
+
+      .experience-card {
+
+        min-height: auto;
       }
-    }
-  </style>
-</head>
 
-<body>
-
-  <div class="stars">
-    <div class="star">✦</div>
-    <div class="star">✧</div>
-    <div class="star">✦</div>
-    <div class="star">✧</div>
-  </div>
-
-  <header>
-    <div class="brand">
-      Moon<span>reya</span> ✦
-    </div>
-
-    <div class="tagline">
-      Un pequeño universo para descubrir, jugar y compartir.
-    </div>
-  </header>
-
-  <main>
-
-    <section class="hero">
-
-      <div class="mascot">
-        ⭐
-      </div>
-
-      <div class="bubble">
-        Hola, ¿qué quieres descubrir hoy? ✨
-      </div>
-
-      <h1>
-        Entra a<br>
-        Moonreya
-      </h1>
-
-      <p class="intro">
-        Explora tu personalidad, juega, descubre cosas inesperadas
-        sobre ti y encuentra experiencias que querrás compartir.
-      </p>
-
-    </section>
-
-    <section class="categories">
-
-      <button class="card" onclick="window.location.href='/moonreya/Descubre.html'">
-        <span class="icon">✨</span>
-        Descubre
-      </button>
-
-      <button class="card" onclick="comingSoon('Conecta')">
-        <span class="icon">💗</span>
-        Conecta
-      </button>
-
-      <button class="card" onclick="comingSoon('Juegos')">
-        <span class="icon">🎲</span>
-        Juegos
-      </button>
-
-      <button class="card" onclick="comingSoon('Diario')">
-        <span class="icon">🌙</span>
-        Diario
-      </button>
-
-    </section>
-
-  </main>
-
-  <footer>
-    © 2026 Moonreya · Hecho con ✦
-  </footer>
-
-  <script>
-    function comingSoon(section) {
-      alert(
-        section +
-        " será una de las próximas experiencias de Moonreya ✨"
-      );
-    }
-  </script>
-
-</body>
-</html>
+            }
+    
