@@ -1,0 +1,2023 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moonreya — descubre algo sobre ti</title>
+<meta name="description" content="Moonreya — un universo para descubrir, jugar y compartir.">
+<meta name="theme-color" content="#f8f1ff">
+
+<style>
+:root {
+  --ink: #3d3150;
+  --soft: #6f637c;
+  --purple: #946bd0;
+  --purple-dark: #65448d;
+  --lavender: #eee2fa;
+  --pink: #f3b0d2;
+  --yellow: #ffd96f;
+  --white: rgba(255,255,255,.82);
+  --border: rgba(255,255,255,.88);
+  --shadow: 0 18px 45px rgba(72,49,103,.10);
+  --soft-shadow: 0 10px 28px rgba(72,49,103,.08);
+  --max: 1080px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 8% 4%, rgba(255,216,244,.92), transparent 27%),
+    radial-gradient(circle at 92% 8%, rgba(208,226,255,.92), transparent 30%),
+    radial-gradient(circle at 50% 100%, rgba(226,215,255,.82), transparent 38%),
+    linear-gradient(160deg,#fffafd 0%,#f8f3ff 48%,#eff6ff 100%);
+}
+
+button {
+  font: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible {
+  outline: 3px solid rgba(148,107,208,.35);
+  outline-offset: 4px;
+}
+
+.background-stars {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.background-stars span {
+  position: absolute;
+  color: #ad84dc;
+  opacity: .42;
+  font-size: 13px;
+  animation: twinkle 3.5s ease-in-out infinite;
+}
+
+.background-stars span:nth-child(1) { top: 8%; left: 8%; }
+.background-stars span:nth-child(2) { top: 18%; right: 11%; animation-delay: .8s; }
+.background-stars span:nth-child(3) { top: 39%; left: 4%; animation-delay: 1.7s; }
+.background-stars span:nth-child(4) { top: 61%; right: 6%; animation-delay: .4s; }
+.background-stars span:nth-child(5) { top: 82%; left: 14%; animation-delay: 2s; }
+.background-stars span:nth-child(6) { top: 73%; left: 47%; animation-delay: 1.2s; }
+.background-stars span:nth-child(7) { top: 31%; right: 39%; animation-delay: 2.4s; }
+.background-stars span:nth-child(8) { top: 91%; right: 22%; animation-delay: 1.4s; }
+
+@keyframes twinkle {
+  0%,100% { opacity: .22; transform: scale(.88) rotate(0deg); }
+  50% { opacity: .78; transform: scale(1.25) rotate(12deg); }
+}
+
+.site-header {
+  position: relative;
+  z-index: 20;
+  padding: 22px 20px 8px;
+}
+
+.header-inner {
+  width: min(100%,var(--max));
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -1.6px;
+}
+
+.logo-main { color: var(--ink); }
+.logo-accent { color: var(--purple); }
+
+.logo-star {
+  color: #e9bb4e;
+  font-size: 21px;
+  transform: translateY(-5px);
+}
+
+.header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.header-pill {
+  border: 1px solid rgba(148,107,208,.13);
+  border-radius: 999px;
+  padding: 9px 12px;
+  background: rgba(255,255,255,.55);
+  color: var(--purple-dark);
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform .2s ease,background .2s ease;
+}
+
+.header-pill:hover {
+  transform: translateY(-2px);
+  background: rgba(255,255,255,.82);
+}
+
+.hero {
+  position: relative;
+  z-index: 2;
+  width: min(100%,var(--max));
+  margin: 0 auto;
+  padding: 22px 20px 65px;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 25px;
+  min-height: 585px;
+}
+
+.hero-copy {
+  position: relative;
+  z-index: 5;
+}
+
+.eyebrow {
+  display: inline-flex;
+  gap: 7px;
+  margin-bottom: 18px;
+  padding: 8px 12px;
+  border: 1px solid rgba(148,107,208,.12);
+  border-radius: 999px;
+  background: rgba(255,255,255,.56);
+  color: var(--purple-dark);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.hero h1 {
+  max-width: 620px;
+  margin-bottom: 18px;
+  font-size: clamp(42px,7vw,70px);
+  line-height: .98;
+  letter-spacing: -3px;
+}
+
+.highlight {
+  color: var(--purple);
+}
+
+.hero-text {
+  max-width: 570px;
+  margin-bottom: 25px;
+  color: var(--soft);
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 11px;
+}
+
+.main-action {
+  min-height: 54px;
+  padding: 15px 22px;
+  border: none;
+  border-radius: 18px;
+  background: linear-gradient(135deg,#956bd1,#b88de7);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 14px 30px rgba(143,102,199,.25);
+  transition: transform .2s ease,box-shadow .2s ease;
+}
+
+.main-action:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 34px rgba(143,102,199,.32);
+}
+
+.main-action:active {
+  transform: scale(.98);
+}
+
+.surprise-button {
+  min-height: 54px;
+  padding: 14px 18px;
+  border: 1px solid rgba(148,107,208,.15);
+  border-radius: 17px;
+  background: rgba(255,255,255,.58);
+  color: var(--purple-dark);
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform .2s ease,background .2s ease;
+}
+
+.surprise-button:hover {
+  transform: translateY(-3px);
+  background: rgba(255,255,255,.82);
+}
+
+.action-subtext {
+  margin-top: 9px;
+  color: #83768f;
+  font-size: 13px;
+}
+
+.mascot-stage {
+  position: relative;
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mascot-cloud {
+  position: absolute;
+  width: 430px;
+  height: 250px;
+  bottom: 35px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 25% 50%,rgba(255,255,255,.92),transparent 30%),
+    radial-gradient(circle at 58% 44%,rgba(255,255,255,.88),transparent 34%),
+    radial-gradient(circle at 80% 62%,rgba(255,255,255,.76),transparent 28%);
+  filter: blur(5px);
+}
+
+.mascot-orbit {
+  position: absolute;
+  width: 355px;
+  height: 355px;
+  border: 1px dashed rgba(154,117,207,.18);
+  border-radius: 50%;
+  transform: rotate(-13deg);
+}
+
+.mascot-orbit::before,
+.mascot-orbit::after {
+  content: "✦";
+  position: absolute;
+  color: #efc95f;
+  font-size: 20px;
+}
+
+.mascot-orbit::before { top: 35px; left: 45px; }
+.mascot-orbit::after { right: 35px; bottom: 42px; }
+
+.mascot-glow {
+  position: absolute;
+  width: 235px;
+  height: 235px;
+  border-radius: 50%;
+  background: rgba(255,216,111,.20);
+  filter: blur(35px);
+  animation: glowPulse 4s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%,100% { transform: scale(.92); opacity: .55; }
+  50% { transform: scale(1.08); opacity: .82; }
+}
+
+.moonreya-mascot {
+  position: relative;
+  z-index: 6;
+  width: min(390px,72vw);
+  height: min(390px,72vw);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: mascotEntrance 1.2s cubic-bezier(.22,.61,.36,1) both;
+}
+
+.moonreya-star {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  cursor: pointer;
+  filter:
+    drop-shadow(0 18px 25px rgba(80,48,130,.15))
+    drop-shadow(0 0 20px rgba(255,220,115,.14));
+  transform-origin: center center;
+  animation: starFloat 4.6s ease-in-out infinite;
+  will-change: transform;
+  transition: filter .25s ease;
+}
+
+.moonreya-star:hover {
+  filter:
+    drop-shadow(0 20px 28px rgba(80,48,130,.18))
+    drop-shadow(0 0 28px rgba(255,220,115,.28));
+}
+
+@keyframes mascotEntrance {
+  0% { opacity: 0; transform: translateY(38px) scale(.72) rotate(-9deg); }
+  60% { opacity: 1; transform: translateY(-8px) scale(1.04) rotate(2deg); }
+  100% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+}
+
+@keyframes starFloat {
+  0%,100% { transform: translate3d(0,0,0) rotate(-1.5deg); }
+  25% { transform: translate3d(0,-5px,0) rotate(1deg); }
+  50% { transform: translate3d(0,-13px,0) rotate(2deg); }
+  75% { transform: translate3d(0,-5px,0) rotate(-1deg); }
+}
+
+@keyframes starHappy {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.06) rotate(-3deg); }
+  60% { transform: scale(1.03) rotate(3deg); }
+  100% { transform: scale(1); }
+}
+
+.mascot-stage.sparkle-mode .moonreya-star {
+  animation:
+    starFloat 4.6s ease-in-out infinite,
+    starHappy 1.1s ease-in-out;
+}
+
+.star-speech {
+  position: absolute;
+  right: -12px;
+  top: 25px;
+  z-index: 10;
+  width: max-content;
+  max-width: 190px;
+  padding: 11px 15px;
+  border-radius: 18px;
+  background: rgba(255,255,255,.92);
+  color: var(--purple-dark);
+  box-shadow: 0 10px 28px rgba(73,49,105,.10);
+  font-size: 13px;
+  line-height: 1.35;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(8px) scale(.94);
+  animation: speechAppear .9s ease 1.2s forwards;
+  pointer-events: none;
+}
+
+.star-speech::after {
+  content: "";
+  position: absolute;
+  left: 23px;
+  bottom: -7px;
+  width: 15px;
+  height: 15px;
+  background: rgba(255,255,255,.92);
+  transform: rotate(45deg);
+}
+
+@keyframes speechAppear {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.promise-strip {
+  width: min(100%,900px);
+  margin: -15px auto 65px;
+  padding: 15px 18px;
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 10px;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  background: rgba(255,255,255,.55);
+  box-shadow: var(--soft-shadow);
+}
+
+.promise-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  color: var(--soft);
+  font-size: 12px;
+  text-align: center;
+}
+
+.promise-item strong {
+  color: var(--purple-dark);
+}
+
+.section,
+.for-you,
+.collection-section,
+.secret-section,
+.share-section {
+  position: relative;
+  z-index: 2;
+  width: min(100%,var(--max));
+  margin: 0 auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.section {
+  padding-bottom: 72px;
+}
+
+.section-heading {
+  max-width: 650px;
+  margin: 0 auto 25px;
+  text-align: center;
+}
+
+.section-kicker {
+  display: inline-block;
+  margin-bottom: 8px;
+  color: var(--purple);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.section-heading h2 {
+  margin-bottom: 8px;
+  font-size: clamp(28px,5vw,40px);
+  letter-spacing: -1.4px;
+}
+
+.section-heading p {
+  color: var(--soft);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.experience-grid {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 14px;
+}
+
+.experience-card {
+  position: relative;
+  min-height: 230px;
+  padding: 22px 18px;
+  border: 1px solid var(--border);
+  border-radius: 26px;
+  background: rgba(255,255,255,.67);
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+  box-shadow: var(--soft-shadow);
+  transition:
+    transform .22s ease,
+    box-shadow .22s ease,
+    background .22s ease;
+  overflow: hidden;
+}
+
+.experience-card::before {
+  content: "";
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  top: -55px;
+  right: -45px;
+  border-radius: 50%;
+  background: rgba(220,197,249,.34);
+}
+
+.experience-card:hover {
+  transform: translateY(-6px);
+  background: rgba(255,255,255,.82);
+  box-shadow: 0 18px 38px rgba(73,49,105,.12);
+}
+
+.experience-icon {
+  position: relative;
+  z-index: 1;
+  display: block;
+  margin-bottom: 16px;
+  font-size: 34px;
+}
+
+.experience-card h3 {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 9px;
+  font-size: 20px;
+}
+
+.experience-card p {
+  position: relative;
+  z-index: 1;
+  color: #74697e;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.card-arrow {
+  position: absolute;
+  left: 18px;
+  bottom: 15px;
+  color: var(--purple);
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.for-you {
+  padding-bottom: 72px;
+}
+
+.for-you-box {
+  position: relative;
+  min-height: 220px;
+  display: grid;
+  grid-template-columns: .9fr 1.3fr;
+  align-items: center;
+  gap: 25px;
+  padding: 25px;
+  border: 1px solid var(--border);
+  border-radius: 34px;
+  background:
+    radial-gradient(circle at 10% 50%,rgba(255,213,236,.55),transparent 32%),
+    linear-gradient(135deg,rgba(255,255,255,.85),rgba(244,236,255,.82));
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.for-you-art {
+  position: relative;
+  min-height: 170px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.for-you-art::before {
+  content: "";
+  position: absolute;
+  width: 180px;
+  height: 80px;
+  bottom: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.74);
+  filter: blur(8px);
+}
+
+.for-you-star {
+  position: relative;
+  z-index: 1;
+  width: 180px;
+  animation: littleFloat 4s ease-in-out infinite;
+}
+
+@keyframes littleFloat {
+  0%,100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-9px) rotate(2deg); }
+}
+
+.for-you-label {
+  display: inline-block;
+  margin-bottom: 8px;
+  padding: 6px 9px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.66);
+  color: var(--purple);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .8px;
+  text-transform: uppercase;
+}
+
+.for-you-copy h2 {
+  margin-bottom: 8px;
+  font-size: 30px;
+  letter-spacing: -1px;
+}
+
+.for-you-copy p {
+  max-width: 520px;
+  margin-bottom: 17px;
+  color: var(--soft);
+  line-height: 1.55;
+}
+
+.small-action,
+.share-button {
+  border: 1px solid rgba(148,107,208,.12);
+  padding: 11px 16px;
+  border-radius: 14px;
+  background: #eee3fa;
+  color: #634581;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform .2s ease;
+}
+
+.small-action:hover,
+.share-button:hover {
+  transform: translateY(-2px);
+}
+
+.today-card {
+  position: relative;
+  min-height: 220px;
+  padding: 28px;
+  border-radius: 34px;
+  background:
+    radial-gradient(circle at 85% 25%,rgba(190,213,250,.65),transparent 27%),
+    radial-gradient(circle at 15% 80%,rgba(255,207,233,.50),transparent 27%),
+    rgba(255,255,255,.68);
+  border: 1px solid var(--border);
+  box-shadow: var(--soft-shadow);
+  overflow: hidden;
+}
+
+.today-stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.today-stars span {
+  position: absolute;
+  color: #c49ee7;
+  opacity: .65;
+}
+
+.today-content {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.today-label {
+  display: inline-block;
+  margin-bottom: 9px;
+  color: var(--purple);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.today-content h2 {
+  margin-bottom: 9px;
+  font-size: 30px;
+  letter-spacing: -1px;
+}
+
+.today-content p {
+  max-width: 610px;
+  margin: 0 auto 18px;
+  color: var(--soft);
+  line-height: 1.55;
+}
+
+.collection-section,
+.secret-section,
+.share-section {
+  padding-bottom: 72px;
+}
+
+.collection-box,
+.share-box {
+  padding: 25px;
+  border: 1px solid var(--border);
+  border-radius: 34px;
+  background: rgba(255,255,255,.62);
+  box-shadow: var(--soft-shadow);
+}
+
+.collection-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.collection-top h2 {
+  margin-bottom: 6px;
+  font-size: 26px;
+}
+
+.collection-top p {
+  color: var(--soft);
+  font-size: 13px;
+}
+
+.collection-count {
+  color: var(--purple-dark);
+  font-size: 13px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.progress-track {
+  width: 100%;
+  height: 9px;
+  margin-bottom: 22px;
+  border-radius: 999px;
+  background: #eee7f5;
+  overflow: hidden;
+}
+
+.progress-fill {
+  width: 10%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg,#a477da,#efacd2);
+  transition: width .5s ease;
+}
+
+.collection-grid {
+  display: grid;
+  grid-template-columns: repeat(5,1fr);
+  gap: 10px;
+}
+
+.collection-item {
+  min-height: 94px;
+  padding: 12px;
+  border: 1px dashed rgba(148,107,208,.18);
+  border-radius: 18px;
+  background: rgba(250,246,255,.72);
+  text-align: center;
+}
+
+.collection-symbol {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 25px;
+}
+
+.collection-item span:last-child {
+  color: #82758f;
+  font-size: 11px;
+}
+
+.secret-box {
+  position: relative;
+  padding: 30px;
+  border-radius: 34px;
+  border: 1px solid rgba(157,119,207,.20);
+  background:
+    radial-gradient(circle at 80% 20%,rgba(231,207,255,.50),transparent 28%),
+    linear-gradient(135deg,rgba(255,255,255,.80),rgba(240,232,255,.78));
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.secret-badge {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: rgba(148,107,208,.10);
+  color: var(--purple-dark);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .8px;
+  text-transform: uppercase;
+}
+
+.secret-box h2 {
+  max-width: 700px;
+  margin-bottom: 9px;
+  font-size: 31px;
+  letter-spacing: -1px;
+}
+
+.secret-box p {
+  max-width: 650px;
+  margin-bottom: 18px;
+  color: var(--soft);
+  line-height: 1.6;
+}
+
+.secret-button {
+  border: none;
+  padding: 13px 18px;
+  border-radius: 15px;
+  background: linear-gradient(135deg,#7650a8,#a67bd7);
+  color: white;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 12px 25px rgba(118,80,168,.20);
+}
+
+.secret-stars {
+  position: absolute;
+  right: 25px;
+  top: 24px;
+  font-size: 56px;
+  opacity: .20;
+}
+
+.share-box {
+  text-align: center;
+}
+
+.share-box h2 {
+  margin-bottom: 8px;
+  font-size: 28px;
+}
+
+.share-box p {
+  max-width: 570px;
+  margin: 0 auto 18px;
+  color: var(--soft);
+  line-height: 1.55;
+}
+
+.site-footer {
+  position: relative;
+  z-index: 2;
+  padding: 30px 20px 42px;
+  color: #877b91;
+  font-size: 12px;
+  line-height: 1.7;
+  text-align: center;
+}
+
+.footer-logo {
+  margin-bottom: 5px;
+  color: var(--purple-dark);
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  z-index: 100;
+  width: min(90vw,420px);
+  padding: 12px 16px;
+  border-radius: 15px;
+  background: rgba(61,49,80,.94);
+  color: white;
+  font-size: 13px;
+  line-height: 1.4;
+  text-align: center;
+  box-shadow: 0 15px 35px rgba(35,25,50,.22);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%,20px);
+  transition: opacity .25s ease,transform .25s ease;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translate(-50%,0);
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(45,31,61,.34);
+  backdrop-filter: blur(8px);
+}
+
+.modal-backdrop.open {
+  display: flex;
+}
+
+.modal {
+  width: min(100%,460px);
+  padding: 27px;
+  border: 1px solid rgba(255,255,255,.80);
+  border-radius: 28px;
+  background: rgba(255,255,255,.94);
+  box-shadow: 0 30px 70px rgba(42,27,58,.22);
+  text-align: center;
+  animation: modalIn .25s ease both;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(12px) scale(.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modal-icon {
+  margin-bottom: 8px;
+  font-size: 40px;
+}
+
+.modal h2 {
+  margin-bottom: 8px;
+  font-size: 25px;
+}
+
+.modal p {
+  margin-bottom: 18px;
+  color: var(--soft);
+  line-height: 1.55;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.modal-primary,
+.modal-secondary {
+  border: none;
+  padding: 11px 16px;
+  border-radius: 14px;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.modal-primary {
+  background: #9b72d4;
+  color: white;
+}
+
+.modal-secondary {
+  background: #f0e7f9;
+  color: var(--purple-dark);
+}
+
+@media (max-width:900px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .hero-copy {
+    order: 1;
+  }
+
+  .mascot-stage {
+    order: 2;
+    min-height: 390px;
+  }
+
+  .hero-text {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-actions {
+    justify-content: center;
+  }
+
+  .experience-grid {
+    grid-template-columns: repeat(2,1fr);
+  }
+
+  .for-you-box {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .for-you-copy p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width:650px) {
+  .site-header {
+    padding-top: 17px;
+  }
+
+  .header-inner {
+    justify-content: center;
+  }
+
+  .header-actions {
+    display: none;
+  }
+
+  .logo {
+    font-size: 30px;
+  }
+
+  .hero {
+    padding-top: 12px;
+    padding-bottom: 48px;
+  }
+
+  .hero-grid {
+    gap: 0;
+    min-height: 0;
+  }
+
+  .hero h1 {
+    font-size: 45px;
+    letter-spacing: -2.2px;
+  }
+
+  .hero-text {
+    font-size: 15px;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+  }
+
+  .main-action,
+  .surprise-button {
+    width: min(100%,360px);
+  }
+
+  .mascot-stage {
+    min-height: 315px;
+    margin-top: -5px;
+  }
+
+  .mascot-cloud {
+    width: 310px;
+    height: 190px;
+  }
+
+  .mascot-orbit {
+    width: 275px;
+    height: 275px;
+  }
+
+  .moonreya-mascot {
+    width: min(310px,78vw);
+    height: min(310px,78vw);
+  }
+
+  .star-speech {
+    right: -2px;
+    top: 3px;
+    max-width: 145px;
+    padding: 9px 11px;
+    font-size: 11px;
+  }
+
+  .promise-strip {
+    grid-template-columns: 1fr;
+    margin-top: 0;
+    margin-bottom: 52px;
+  }
+
+  .section {
+    padding-bottom: 56px;
+  }
+
+  .experience-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .experience-card {
+    min-height: 170px;
+  }
+
+  .for-you {
+    padding-bottom: 56px;
+  }
+
+  .for-you-box {
+    padding: 21px;
+  }
+
+  .for-you-copy h2 {
+    font-size: 27px;
+  }
+
+  .collection-section,
+  .secret-section,
+  .share-section {
+    padding-bottom: 56px;
+  }
+
+  .collection-box,
+  .secret-box,
+  .share-box,
+  .today-card {
+    padding: 21px;
+  }
+
+  .collection-top {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .collection-grid {
+    grid-template-columns: repeat(3,1fr);
+  }
+
+  .secret-box h2 {
+    font-size: 27px;
+  }
+
+  .secret-stars {
+    right: 12px;
+    top: 12px;
+    font-size: 40px;
+  }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="background-stars" aria-hidden="true">
+  <span>✦</span>
+  <span>✧</span>
+  <span>✦</span>
+  <span>✧</span>
+  <span>✦</span>
+  <span>✧</span>
+  <span>✦</span>
+  <span>✧</span>
+</div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo" aria-label="Moonreya">
+      <span class="logo-main">Moon</span>
+      <span class="logo-accent">reya</span>
+      <span class="logo-star">✦</span>
+    </div>
+
+    <div class="header-actions">
+      <button class="header-pill" type="button" onclick="scrollToSection('experiences')">
+        Explorar
+      </button>
+      <button class="header-pill" type="button" onclick="shareMoonreya()">
+        Compartir
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section class="hero" id="inicio">
+  <div class="hero-grid">
+
+    <div class="hero-copy">
+      <div class="eyebrow">✦ Bienvenida a Moonreya</div>
+
+      <h1>
+        Descubre algo
+        <br>
+        <span class="highlight">sobre ti.</span>
+      </h1>
+
+      <p class="hero-text">
+        Entra a Moonreya, elige una experiencia y descubre qué aparece.
+        Algunas respuestas quizá te sorprendan.
+      </p>
+
+      <div class="hero-actions">
+        <button class="main-action" type="button" onclick="goToDiscover()">
+          ✨ Descubrir algo sobre mí
+        </button>
+
+        <button class="surprise-button" type="button" onclick="surpriseMe()">
+          🎲 Sorpréndeme
+        </button>
+      </div>
+
+      <div class="action-subtext">
+        No sabes qué vas a encontrar.
+      </div>
+    </div>
+
+    <div class="mascot-stage" id="mascotStage">
+      <div class="mascot-glow" aria-hidden="true"></div>
+      <div class="mascot-cloud" aria-hidden="true"></div>
+      <div class="mascot-orbit" aria-hidden="true"></div>
+
+      <div class="moonreya-mascot" id="moonreyaMascot">
+        <img
+          src="assets/estrella-moonreya.png"
+          alt="Estrella de Moonreya"
+          class="moonreya-star"
+          id="moonreyaStar"
+        >
+
+        <div class="star-speech" id="starSpeech">
+          Mmm… tengo una idea.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="promise-strip">
+  <div class="promise-item">
+    <span>✨</span>
+    <strong>Experiencias</strong>
+    <span>para descubrir</span>
+  </div>
+
+  <div class="promise-item">
+    <span>🎮</span>
+    <strong>Juegos</strong>
+    <span>para volver</span>
+  </div>
+
+  <div class="promise-item">
+    <span>🌙</span>
+    <strong>Algo nuevo</strong>
+    <span>cada vez</span>
+  </div>
+</div>
+
+<section class="section" id="experiences">
+  <div class="section-heading">
+    <span class="section-kicker">Elige tu camino</span>
+    <h2>¿Qué quieres hacer?</h2>
+    <p>
+      Elige cómo quieres pasar un rato en Moonreya.
+    </p>
+  </div>
+
+  <div class="experience-grid">
+
+    <button class="experience-card" type="button" onclick="goToDiscover()">
+      <span class="experience-icon">✨</span>
+      <h3>Descubre</h3>
+      <p>
+        Tests y experiencias para descubrir cosas inesperadas sobre ti.
+      </p>
+      <span class="card-arrow">→</span>
+    </button>
+
+    <button class="experience-card" type="button" onclick="comingSoon('Conecta')">
+      <span class="experience-icon">💗</span>
+      <h3>Conecta</h3>
+      <p>
+        Comparte y descubre qué tienen en común contigo y otras personas.
+      </p>
+      <span class="card-arrow">→</span>
+    </button>
+
+    <button class="experience-card" type="button" onclick="comingSoon('Juegos')">
+      <span class="experience-icon">🎮</span>
+      <h3>Juegos</h3>
+      <p>
+        Juegos cortos para entrar, jugar y volver a intentarlo.
+      </p>
+      <span class="card-arrow">→</span>
+    </button>
+
+    <button class="experience-card" type="button" onclick="comingSoon('Moonreya de hoy')">
+      <span class="experience-icon">🌙</span>
+      <h3>Moonreya de hoy</h3>
+      <p>
+        Una experiencia diferente para descubrir cada día.
+      </p>
+      <span class="card-arrow">→</span>
+    </button>
+
+  </div>
+</section>
+
+<section class="for-you">
+  <div class="for-you-box">
+    <div class="for-you-art">
+      <img
+        class="for-you-star"
+        src="assets/estrella-moonreya.png"
+        alt=""
+        aria-hidden="true"
+      >
+    </div>
+
+    <div class="for-you-copy">
+      <span class="for-you-label">Para ti</span>
+      <h2>Hay algo esperándote.</h2>
+      <p>
+        Cada vez que vuelvas a Moonreya podrás encontrar una experiencia
+        diferente para jugar, descubrir o compartir.
+      </p>
+      <button class="small-action" type="button" onclick="surpriseMe()">
+        Ver qué hay
+      </button>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="today">
+  <div class="section-heading">
+    <span class="section-kicker">Cada visita puede cambiar</span>
+    <h2>Moonreya de hoy</h2>
+    <p>
+      Un pequeño espacio que irá cambiando con nuevas preguntas, juegos y sorpresas.
+    </p>
+  </div>
+
+  <div class="today-card">
+    <div class="today-stars" aria-hidden="true">
+      <span style="top:22px;right:45px;">✦</span>
+      <span style="bottom:30px;left:32px;">✧</span>
+      <span style="top:70px;left:43%;">✦</span>
+    </div>
+
+    <div class="today-content">
+      <span class="today-label">La propuesta de hoy</span>
+      <h2>¿Qué parte de ti aparece primero?</h2>
+      <p>
+        Una experiencia breve para empezar sin pensarlo demasiado.
+        Próximamente podrás jugarla directamente desde aquí.
+      </p>
+      <button class="small-action" type="button" onclick="comingSoon('Moonreya de hoy')">
+        Próximamente
+      </button>
+    </div>
+  </div>
+</section>
+
+<section class="collection-section" id="collection">
+  <div class="collection-box">
+    <div class="collection-top">
+      <div>
+        <h2>Tu colección</h2>
+        <p>Guarda tus descubrimientos mientras exploras Moonreya.</p>
+      </div>
+
+      <div class="collection-count" id="collectionCount">
+        1 de 10 descubiertos
+      </div>
+    </div>
+
+    <div class="progress-track">
+      <div class="progress-fill" id="collectionProgress"></div>
+    </div>
+
+    <div class="collection-grid">
+      <div class="collection-item">
+        <span class="collection-symbol">✦</span>
+        <span>Primer descubrimiento</span>
+      </div>
+
+      <div class="collection-item">
+        <span class="collection-symbol">🌙</span>
+        <span>Bloqueado</span>
+      </div>
+
+      <div class="collection-item">
+        <span class="collection-symbol">♡</span>
+        <span>Bloqueado</span>
+      </div>
+
+      <div class="collection-item">
+        <span class="collection-symbol">☁</span>
+        <span>Bloqueado</span>
+      </div>
+
+      <div class="collection-item">
+        <span class="collection-symbol">✧</span>
+        <span>Bloqueado</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="secret-section" id="secret">
+  <div class="secret-box">
+    <div class="secret-stars" aria-hidden="true">✦ ☾ ✧</div>
+
+    <span class="secret-badge">Más adelante · Sala secreta</span>
+
+    <h2>Hay cosas que Moonreya no te muestra todavía.</h2>
+
+    <p>
+      La Sala Secreta será un espacio especial con historias interactivas,
+      experiencias exclusivas y nuevos descubrimientos.
+    </p>
+
+    <button class="secret-button" type="button" onclick="showSecretPreview()">
+      Guardar el misterio
+    </button>
+  </div>
+</section>
+
+<section class="share-section">
+  <div class="share-box">
+    <h2>¿Encontraste Moonreya?</h2>
+
+    <p>
+      Compártelo con alguien que podría querer descubrir qué aparece para él o ella.
+    </p>
+
+    <button class="share-button" type="button" onclick="shareMoonreya()">
+      ✨ Compartir Moonreya
+    </button>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-logo">Moonreya ✦</div>
+  <div>© 2026 Moonreya</div>
+  <div>Un universo para descubrir, jugar y compartir.</div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<div class="modal-backdrop" id="surpriseModal" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true">
+    <div class="modal-icon">🎲</div>
+
+    <h2 id="surpriseTitle">
+      La estrella eligió algo.
+    </h2>
+
+    <p id="surpriseText">
+      Parece que hoy toca descubrir algo sobre ti.
+    </p>
+
+    <div class="modal-actions">
+      <button class="modal-primary" type="button" onclick="goToDiscover()">
+        Vamos
+      </button>
+
+      <button class="modal-secondary" type="button" onclick="closeSurprise()">
+        Después
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+"use strict";
+
+const mascotStage = document.getElementById("mascotStage");
+const mascot = document.getElementById("moonreyaMascot");
+const star = document.getElementById("moonreyaStar");
+const speech = document.getElementById("starSpeech");
+const toast = document.getElementById("toast");
+const surpriseModal = document.getElementById("surpriseModal");
+const surpriseText = document.getElementById("surpriseText");
+const surpriseTitle = document.getElementById("surpriseTitle");
+const collectionCount = document.getElementById("collectionCount");
+const collectionProgress = document.getElementById("collectionProgress");
+
+const starPhrases = [
+  "Mmm… tengo una idea.",
+  "¿Y si pruebas este?",
+  "Espera… este me gusta.",
+  "No sé por qué, pero elegiste la luna.",
+  "Ok… eso no me lo esperaba.",
+  "Encontraste algo.",
+  "¿Seguimos?",
+  "Tengo una pequeña sorpresa.",
+  "Creo que este te va a gustar."
+];
+
+const surpriseExperiences = [
+  {
+    title: "La estrella eligió Descubre.",
+    text: "Hay una experiencia esperando para que descubras algo sobre ti."
+  },
+  {
+    title: "Mmm… una prueba rápida.",
+    text: "La estrella cree que deberías empezar por una experiencia de Descubre."
+  },
+  {
+    title: "Hoy toca curiosidad.",
+    text: "No sabes qué vas a encontrar. Esa es precisamente la idea."
+  },
+  {
+    title: "La estrella tiene una idea.",
+    text: "Vamos a ver qué aparece esta vez."
+  }
+];
+
+function goToDiscover() {
+  window.location.href = "Descubre.html";
+}
+
+function scrollToSection(id) {
+  const target = document.getElementById(id);
+
+  if (!target) {
+    return;
+  }
+
+  target.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+}
+
+function setStarPhrase(message) {
+  speech.textContent = message;
+  speech.style.animation = "none";
+  void speech.offsetWidth;
+  speech.style.animation = "speechAppear .7s ease forwards";
+}
+
+function randomStarPhrase() {
+  const index =
+    Math.floor(Math.random() * starPhrases.length);
+
+  setStarPhrase(starPhrases[index]);
+}
+
+function showToast(message) {
+  toast.textContent = message;
+  toast.classList.add("show");
+
+  clearTimeout(window.moonreyaToastTimer);
+
+  window.moonreyaToastTimer =
+    setTimeout(function() {
+      toast.classList.remove("show");
+    },3000);
+}
+
+function surpriseMe() {
+  const chosen =
+    surpriseExperiences[
+      Math.floor(
+        Math.random() * surpriseExperiences.length
+      )
+    ];
+
+  surpriseTitle.textContent = chosen.title;
+  surpriseText.textContent = chosen.text;
+
+  surpriseModal.classList.add("open");
+  surpriseModal.setAttribute("aria-hidden","false");
+
+  setStarPhrase("Tengo una pequeña sorpresa.");
+
+  mascotStage.classList.remove("sparkle-mode");
+  void mascotStage.offsetWidth;
+  mascotStage.classList.add("sparkle-mode");
+}
+
+function closeSurprise() {
+  surpriseModal.classList.remove("open");
+  surpriseModal.setAttribute("aria-hidden","true");
+}
+
+surpriseModal.addEventListener(
+  "click",
+  function(event) {
+    if (event.target === surpriseModal) {
+      closeSurprise();
+    }
+  }
+);
+
+function comingSoon(section) {
+  const messages = {
+    "Conecta":
+      "Conecta será un espacio para compartir y encontrar cosas en común.",
+
+    "Juegos":
+      "Los juegos están en camino. Queremos que sean rápidos y rejugables.",
+
+    "Moonreya de hoy":
+      "Moonreya de hoy cambiará con nuevas experiencias."
+  };
+
+  showToast(
+    messages[section] ||
+    "Esta parte de Moonreya llegará más adelante."
+  );
+
+  setStarPhrase("Mmm… todavía no. Pero llegará.");
+
+  mascotStage.classList.remove("sparkle-mode");
+  void mascotStage.offsetWidth;
+  mascotStage.classList.add("sparkle-mode");
+}
+
+function showSecretPreview() {
+  showToast(
+    "La Sala Secreta todavía está cerrada. El misterio queda guardado."
+  );
+
+  setStarPhrase("Todavía no puedes entrar…");
+
+  mascotStage.classList.remove("sparkle-mode");
+  void mascotStage.offsetWidth;
+  mascotStage.classList.add("sparkle-mode");
+}
+
+async function shareMoonreya() {
+  const shareData = {
+    title: "Moonreya",
+    text: "Descubre algo sobre ti en Moonreya ✨",
+    url: window.location.href
+  };
+
+  if (
+    navigator.share &&
+    typeof navigator.share === "function"
+  ) {
+    try {
+      await navigator.share(shareData);
+      setStarPhrase("¿Viste? Ya somos dos.");
+      return;
+    } catch (error) {
+      if (
+        error &&
+        error.name === "AbortError"
+      ) {
+        return;
+      }
+    }
+  }
+
+  try {
+    await navigator.clipboard.writeText(
+      window.location.href
+    );
+
+    showToast(
+      "Enlace copiado. Ahora puedes compartir Moonreya."
+    );
+
+    setStarPhrase("Ahora sí. Compártelo.");
+  } catch (error) {
+    showToast(
+      "Copia el enlace de esta página para compartir Moonreya."
+    );
+
+    setStarPhrase("¿Lo compartimos?");
+  }
+}
+
+window.addEventListener(
+  "load",
+  function() {
+    setTimeout(
+      function() {
+        setStarPhrase("Mmm… tengo una idea.");
+      },
+      1500
+    );
+
+    setTimeout(
+      function() {
+        setStarPhrase("¿Y si pruebas este?");
+      },
+      6500
+    );
+  }
+);
+
+const mainAction =
+  document.querySelector(".main-action");
+
+if (mainAction) {
+  mainAction.addEventListener(
+    "mouseenter",
+    function() {
+      setStarPhrase("Sí. Ese.");
+
+      mascotStage.classList.remove("sparkle-mode");
+      void mascotStage.offsetWidth;
+      mascotStage.classList.add("sparkle-mode");
+    }
+  );
+
+  mainAction.addEventListener(
+    "focus",
+    function() {
+      setStarPhrase("Ese botón me gusta.");
+    }
+  );
+}
+
+const experienceCards =
+  document.querySelectorAll(".experience-card");
+
+experienceCards.forEach(
+  function(card,index) {
+    card.addEventListener(
+      "mouseenter",
+      function() {
+        const messages = [
+          "Empieza por aquí.",
+          "Esta puede ser interesante.",
+          "Tengo ganas de que hagan esta parte.",
+          "Esta cambia cada día."
+        ];
+
+        setStarPhrase(
+          messages[index] ||
+          "Mmm… interesante."
+        );
+      }
+    );
+  }
+);
+
+const observedSections =
+  document.querySelectorAll(
+    ".section,.for-you,.collection-section,.secret-section,.share-section"
+  );
+
+const sectionObserver =
+  new IntersectionObserver(
+    function(entries) {
+      entries.forEach(
+        function(entry) {
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          if (
+            entry.target.classList.contains(
+              "collection-section"
+            )
+          ) {
+            setStarPhrase(
+              "Mira lo que ya encontraste."
+            );
+          }
+
+          if (
+            entry.target.classList.contains(
+              "secret-section"
+            )
+          ) {
+            setStarPhrase(
+              "Shhh… esa puerta todavía no."
+            );
+          }
+
+          if (
+            entry.target.classList.contains(
+              "share-section"
+            )
+          ) {
+            setStarPhrase(
+              "¿Con quién lo compartirías?"
+            );
+          }
+        }
+      );
+    },
+    {
+      threshold: .35
+    }
+  );
+
+observedSections.forEach(
+  function(section) {
+    sectionObserver.observe(section);
+  }
+);
+
+let scrollTicking = false;
+
+window.addEventListener(
+  "scroll",
+  function() {
+    if (scrollTicking) {
+      return;
+    }
+
+    window.requestAnimationFrame(
+      function() {
+        updateMascotScroll();
+        scrollTicking = false;
+      }
+    );
+
+    scrollTicking = true;
+  },
+  {
+    passive: true
+  }
+);
+
+function updateMascotScroll() {
+  if (!mascot) {
+    return;
+  }
+
+  const scrollY =
+    window.scrollY || 0;
+
+  const hero =
+    document.querySelector(".hero");
+
+  if (!hero) {
+    return;
+  }
+
+  const heroHeight =
+    hero.offsetHeight;
+
+  if (
+    scrollY <
+    heroHeight * .45
+  ) {
+    mascot.style.transform =
+      "translate3d(0,0,0)";
+    return;
+  }
+
+  if (
+    scrollY <
+    heroHeight * .90
+  ) {
+    mascot.style.transform =
+      "translate3d(0,5px,0)";
+    return;
+  }
+
+  mascot.style.transform =
+    "translate3d(0,8px,0)";
+}
+
+const finePointer =
+  window.matchMedia(
+    "(hover:hover) and (pointer:fine)"
+  ).matches;
+
+if (finePointer) {
+  mascotStage.addEventListener(
+    "mousemove",
+    function(event) {
+      const rect =
+        mascotStage.getBoundingClientRect();
+
+      const x =
+        (event.clientX - rect.left) /
+        rect.width;
+
+      const y =
+        (event.clientY - rect.top) /
+        rect.height;
+
+      const rotateY =
+        (x - .5) * 5;
+
+      const rotateX =
+        (y - .5) * -4;
+
+      star.style.transform =
+        "perspective(700px) rotateX(" +
+        rotateX +
+        "deg) rotateY(" +
+        rotateY +
+        "deg)";
+    }
+  );
+
+  mascotStage.addEventListener(
+    "mouseleave",
+    function() {
+      star.style.transform = "";
+    }
+  );
+}
+
+star.addEventListener(
+  "click",
+  function() {
+    const messages = [
+      "¡Ey! También sé guardar secretos.",
+      "¿Me estabas mirando?",
+      "Tengo otra idea.",
+      "Vale… una más.",
+      "Encontraste mi rincón."
+    ];
+
+    const message =
+      messages[
+        Math.floor(
+          Math.random() * messages.length
+        )
+      ];
+
+    setStarPhrase(message);
+
+    mascotStage.classList.remove(
+      "sparkle-mode"
+    );
+
+    void mascotStage.offsetWidth;
+
+    mascotStage.classList.add(
+      "sparkle-mode"
+    );
+  }
+);
+
+function updateCollectionVisual(count) {
+  const safeCount =
+    Math.max(
+      0,
+      Math.min(10,count)
+    );
+
+  collectionProgress.style.width =
+    safeCount * 10 + "%";
+
+  collectionCount.textContent =
+    safeCount +
+    " de 10 descubiertos";
+}
+
+function loadMoonreyaState() {
+  const saved =
+    localStorage.getItem(
+      "moonreyaCollection"
+    );
+
+  if (!saved) {
+    updateCollectionVisual(1);
+    return;
+  }
+
+  const count =
+    Number.parseInt(
+      saved,
+      10
+    );
+
+  if (Number.isNaN(count)) {
+    updateCollectionVisual(1);
+    return;
+  }
+
+  updateCollectionVisual(count);
+}
+
+loadMoonreyaState();
+
+document.addEventListener(
+  "visibilitychange",
+  function() {
+    if (document.hidden) {
+      return;
+    }
+
+    setTimeout(
+      function() {
+        randomStarPhrase();
+      },
+      500
+    );
+  }
+);
+
+document.addEventListener(
+  "keydown",
+  function(event) {
+    if (event.key === "Escape") {
+      closeSurprise();
+    }
+  }
+);
+</script>
+
+</body>
+</html>
