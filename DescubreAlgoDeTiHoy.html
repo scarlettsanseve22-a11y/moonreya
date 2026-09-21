@@ -925,10 +925,334 @@
     const continueButton = document.getElementById("continueButton");
 
     const topOptions = document.getElementById("topOptions");
-    const pantsOptions = document.getElementById("pantsOptions");
-    const shoesOptions = document.getElementById("shoesOptions");
+const pantsOptions = document.getElementById("pantsOptions");
+const shoesOptions = document.getElementById("shoesOptions");
 
     const basePreview = document.getElementById("basePreview");
     const topPreview = document.getElementById("topPreview");
     const pantsPreview = document.getElementById("pantsPreview");
-    const shoe
+    const shoesPreview = document.getElementById("shoesPreview");
+
+    const previewLabel = document.getElementById("previewLabel");
+
+    const genderButtons =
+      document.querySelectorAll("[data-gender]");
+
+
+    /*
+      ------------------------------------------------------------
+      RUTAS
+      encodeURI permite trabajar correctamente con:
+      espacios, acentos y nombres de archivos.
+      ------------------------------------------------------------
+    */
+
+    function assetPath(fileName) {
+      return ASSET_FOLDER + encodeURI(fileName);
+    }
+
+
+    /*
+      ------------------------------------------------------------
+      CAMBIAR DE PANTALLA
+      ------------------------------------------------------------
+    */
+
+    function showScreen(screenToShow) {
+
+      const screens = [
+        introScreen,
+        genderScreen,
+        closetScreen
+      ];
+
+      screens.forEach(function(screen) {
+        screen.classList.remove("active");
+      });
+
+      screenToShow.classList.add("active");
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    }
+
+
+    /*
+      ------------------------------------------------------------
+      INICIO
+      ------------------------------------------------------------
+    */
+
+    startButton.addEventListener("click", function() {
+      showScreen(genderScreen);
+    });
+
+
+    /*
+      ------------------------------------------------------------
+      ELECCIÓN DE CHICA / CHICO
+      ------------------------------------------------------------
+    */
+
+    genderButtons.forEach(function(button) {
+
+      button.addEventListener("click", function() {
+
+        const selectedGender = button.dataset.gender;
+
+        state.gender = selectedGender;
+
+        state.top = null;
+        state.pants = null;
+        state.shoes = null;
+
+        genderButtons.forEach(function(otherButton) {
+          otherButton.classList.remove("selected");
+        });
+
+        button.classList.add("selected");
+
+        setupCloset(selectedGender);
+
+        showScreen(closetScreen);
+      });
+
+    });
+
+
+    /*
+      ------------------------------------------------------------
+      CREAR OPCIONES DE ROPA
+      ------------------------------------------------------------
+    */
+
+    function setupCloset(gender) {
+
+      const selectedClothing = clothing[gender];
+
+      if (!selectedClothing) {
+        return;
+      }
+
+      basePreview.src = assetPath(selectedClothing.base);
+      basePreview.alt =
+        "Personaje en primera persona: " + gender;
+
+      topPreview.removeAttribute("src");
+      pantsPreview.removeAttribute("src");
+      shoesPreview.removeAttribute("src");
+
+      previewLabel.textContent =
+        gender === "chica"
+          ? "Tu personaje · chica"
+          : "Tu personaje · chico";
+
+      createClothingButtons(
+        topOptions,
+        selectedClothing.top,
+        "top"
+      );
+
+      createClothingButtons(
+        pantsOptions,
+        selectedClothing.pants,
+        "pants"
+      );
+
+      createClothingButtons(
+        shoesOptions,
+        selectedClothing.shoes,
+        "shoes"
+      );
+
+      updateContinueButton();
+    }
+
+
+    /*
+      ------------------------------------------------------------
+      BOTONES DE CADA PRENDA
+      ------------------------------------------------------------
+    */
+
+    function createClothingButtons(
+      container,
+      items,
+      category
+    ) {
+
+      container.innerHTML = "";
+
+      items.forEach(function(item, index) {
+
+        const button = document.createElement("button");
+
+        button.type = "button";
+        button.className = "item-button";
+
+        button.dataset.category = category;
+        button.dataset.index = String(index);
+
+        const image = document.createElement("img");
+
+        image.className = "item-thumbnail";
+        image.src = assetPath(item.file);
+        image.alt = item.name;
+        image.loading = "lazy";
+
+        const name = document.createElement("span");
+
+        name.className = "item-name";
+        name.textContent = item.name;
+
+        button.appendChild(image);
+        button.appendChild(name);
+
+        button.addEventListener("click", function() {
+
+          selectClothing(
+            category,
+            index,
+            button
+          );
+
+        });
+
+        container.appendChild(button);
+
+      });
+    }
+
+
+    /*
+      ------------------------------------------------------------
+      SELECCIONAR PRENDA
+      ------------------------------------------------------------
+    */
+
+    function selectClothing(
+      category,
+      index,
+      clickedButton
+    ) {
+
+      const selectedClothing = clothing[state.gender];
+
+      if (!selectedClothing) {
+        return;
+      }
+
+      let item;
+
+      if (category === "top") {
+        item = selectedClothing.top[index];
+        state.top = item;
+      }
+
+      if (category === "pants") {
+        item = selectedClothing.pants[index];
+        state.pants = item;
+      }
+
+      if (category === "shoes") {
+        item = selectedClothing.shoes[index];
+        state.shoes = item;
+      }
+
+      if (!item) {
+        return;
+      }
+
+      const container = clickedButton.parentElement;
+
+      container
+        .querySelectorAll(".item-button")
+        .forEach(function(button) {
+          button.classList.remove("selected");
+        });
+
+      clickedButton.classList.add("selected");
+
+      if (category === "top") {
+        topPreview.src = assetPath(item.file);
+      }
+
+      if (category === "pants") {
+        pantsPreview.src = assetPath(item.file);
+      }
+
+      if (category === "shoes") {
+        shoesPreview.src = assetPath(item.file);
+      }
+
+      updateContinueButton();
+    }
+
+
+    /*
+      ------------------------------------------------------------
+      ACTIVAR CONTINUAR
+      ------------------------------------------------------------
+    */
+
+    function updateContinueButton() {
+
+      const complete =
+        state.gender !== null &&
+        state.top !== null &&
+        state.pants !== null &&
+        state.shoes !== null;
+
+      continueButton.disabled = !complete;
+    }
+
+
+    /*
+      ------------------------------------------------------------
+      CONTINUAR
+      Por ahora comprobamos que el look esté completo.
+      La historia se añadirá en el siguiente bloque.
+      ------------------------------------------------------------
+    */
+
+    continueButton.addEventListener("click", function() {
+
+      if (continueButton.disabled) {
+        return;
+      }
+
+      alert(
+        "Tu personaje está listo. En el siguiente bloque comienza la historia."
+      );
+
+    });
+
+
+    /*
+      ------------------------------------------------------------
+      VOLVER
+      ------------------------------------------------------------
+    */
+
+    backButton.addEventListener("click", function() {
+
+      if (closetScreen.classList.contains("active")) {
+        showScreen(genderScreen);
+        return;
+      }
+
+      if (genderScreen.classList.contains("active")) {
+        showScreen(introScreen);
+        return;
+      }
+
+      window.location.href = "index.html";
+
+    });
+
+  </script>
+
+</body>
+</html>
