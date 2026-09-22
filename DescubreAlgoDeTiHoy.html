@@ -1,1 +1,423 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#170c2e">
+<title>Descubre algo de ti hoy — Moonreya</title>
+<style>
+:root{
+  --bg:#0d0820;--panel:#171032;--panel2:#21164a;--text:#fff8ff;--muted:#c9bcda;
+  --accent:#d8b8ff;--accent2:#ffd86b;--line:rgba(255,255,255,.13);--good:#9ef0c7;
+  --danger:#ff9eaa;--shadow:0 18px 55px rgba(0,0,0,.35);--radius:26px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:radial-gradient(circle at 50% 0%,#33205d 0,#120a29 43%,#080511 100%);color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body{overflow-x:hidden}
+button{font:inherit}
+button:focus-visible{outline:3px solid var(--accent2);outline-offset:3px}
+#app{width:min(100%,980px);margin:0 auto;padding:16px}
+.screen{display:none;min-height:calc(100vh - 32px);align-items:center;justify-content:center;padding:12px 0 28px}
+.screen.active{display:flex}
+.shell{width:100%;position:relative}
+.panel{background:linear-gradient(160deg,rgba(35,22,72,.96),rgba(17,11,39,.97));border:1px solid var(--line);box-shadow:var(--shadow);border-radius:var(--radius);overflow:hidden}
+.inner{padding:28px}
+.kicker{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:800}
+h1,h2,h3,p{margin-top:0}
+h1{font-size:clamp(2rem,6vw,4.5rem);line-height:.98;letter-spacing:-.04em;margin-bottom:16px}
+h2{font-size:clamp(1.65rem,4vw,2.6rem);line-height:1.02;margin-bottom:10px}
+p{line-height:1.55;color:var(--muted)}
+.center{text-align:center}
+.small{font-size:.86rem;color:var(--muted)}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:22px;align-items:center;padding:34px}
+.hero-art{min-height:240px;display:grid;place-items:center}
+.star-img{width:min(100%,230px);height:230px;object-fit:contain;filter:drop-shadow(0 12px 25px rgba(0,0,0,.35));animation:float 4.5s ease-in-out infinite}
+.star-fallback{font-size:9rem;filter:drop-shadow(0 10px 25px rgba(0,0,0,.35));animation:float 4.5s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-10px) rotate(2deg)}}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+button.primary,button.secondary,button.ghost,button.choice{border:0;cursor:pointer;border-radius:16px;padding:13px 18px;transition:.18s transform,.18s background,.18s border-color}
+button.primary{background:linear-gradient(135deg,#f0c9ff,#b995ff);color:#180d2d;font-weight:900}
+button.secondary{background:linear-gradient(135deg,#ffe990,#ffc95f);color:#2a1800;font-weight:900}
+button.ghost{background:rgba(255,255,255,.06);color:var(--text);border:1px solid var(--line)}
+button:hover{transform:translateY(-2px)}
+button:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.gender-grid,.outfit-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:20px}
+.gender-card,.outfit-card{background:rgba(255,255,255,.045);border:1px solid var(--line);border-radius:22px;padding:18px}
+.gender-card button{width:100%;margin-top:14px}
+.gender-art{height:170px;border-radius:18px;background:radial-gradient(circle at 50% 15%,rgba(255,255,255,.18),transparent 52%),linear-gradient(140deg,#473074,#1b1237);display:grid;place-items:center;font-size:5rem}
+.closet-layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);gap:20px}
+.preview{position:relative;min-height:530px;border-radius:22px;background:radial-gradient(circle at 50% 18%,rgba(216,184,255,.18),transparent 50%),linear-gradient(180deg,#2b1c52,#110a28);overflow:hidden;border:1px solid var(--line)}
+.preview::after{content:"";position:absolute;inset:auto 0 0;height:28%;background:linear-gradient(transparent,rgba(4,2,10,.55));pointer-events:none}
+.character-layer{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center bottom;pointer-events:none;user-select:none;z-index:1}
+.base-layer{z-index:1}.top-layer{z-index:2}.pants-layer{z-index:3}.shoes-layer{z-index:4}
+.loading{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);z-index:10;background:rgba(8,5,17,.52);backdrop-filter:blur(3px)}
+.loading[hidden]{display:none}
+.option-group{margin-top:15px}.option-group h3{font-size:1rem;margin-bottom:8px}
+.option-row{display:flex;gap:8px;flex-wrap:wrap}
+.option-row button{flex:1 1 120px}
+.choice.selected{background:rgba(216,184,255,.2);border-color:rgba(216,184,255,.75);box-shadow:inset 0 0 0 2px rgba(216,184,255,.18)}
+.status{min-height:24px;margin:10px 0 0;color:var(--danger);font-size:.88rem}
+.story-head{display:flex;justify-content:space-between;gap:14px;align-items:center;margin-bottom:12px}
+.progress{height:8px;background:rgba(255,255,255,.07);border-radius:999px;overflow:hidden;margin:12px 0 22px}.progress>span{display:block;height:100%;width:0;background:linear-gradient(90deg,#d8b8ff,#ffd86b);transition:width .35s}
+.scene{position:relative;min-height:430px;border-radius:22px;overflow:hidden;border:1px solid var(--line);background:#171034}
+.scene-sky{position:absolute;inset:0;background:linear-gradient(180deg,#8ea6d2 0,#b8b6cf 43%,#765c55 100%);transition:.5s}
+.scene.moon .scene-sky{background:linear-gradient(180deg,#15163b 0,#27306b 44%,#1c1932 100%)}
+.scene.warm .scene-sky{background:linear-gradient(180deg,#e8b47e 0,#c67363 45%,#3e2531 100%)}
+.scene.forest .scene-sky{background:linear-gradient(180deg,#8ab7ad 0,#4a7a62 40%,#182f28 100%)}
+.scene .sun,.scene .moon-disc{position:absolute;border-radius:50%;width:78px;height:78px;right:13%;top:12%;background:#fff2b3;box-shadow:0 0 55px rgba(255,242,179,.45)}
+.scene.moon .sun{display:none}.scene .moon-disc{display:none}.scene.moon .moon-disc{display:block;background:#e6e8ff;box-shadow:0 0 55px rgba(230,232,255,.35)}
+.scene .horizon{position:absolute;left:-5%;right:-5%;bottom:22%;height:36%;background:linear-gradient(180deg,#4c514b,#2b302d);clip-path:polygon(0 45%,15% 27%,26% 48%,37% 31%,50% 49%,65% 30%,77% 48%,90% 22%,100% 40%,100% 100%,0 100%)}
+.scene .ground{position:absolute;left:0;right:0;bottom:0;height:27%;background:linear-gradient(180deg,#514138,#201a22)}
+.scene .door{position:absolute;width:120px;height:205px;right:16%;bottom:21%;border:8px solid #3e2b2a;background:linear-gradient(90deg,#694845,#2f2224);box-shadow:inset 0 0 0 2px rgba(255,255,255,.08);transition:.5s}
+.scene .door.open{transform:perspective(400px) rotateY(-58deg);transform-origin:left center}
+.scene .branch{position:absolute;width:42%;height:7px;background:#2f251f;border-radius:999px;left:20%;bottom:34%;transform:rotate(-16deg);transform-origin:left center}
+.scene .branch::after{content:"";position:absolute;width:58%;height:7px;left:38%;top:0;background:#2f251f;transform:rotate(31deg);transform-origin:left}
+.scene .branch.two{left:40%;bottom:42%;transform:rotate(18deg)}
+.scene .object{position:absolute;display:grid;place-items:center;min-width:58px;height:58px;padding:7px 9px;border-radius:16px;background:rgba(255,216,107,.92);color:#342000;font-weight:900;box-shadow:0 9px 22px rgba(0,0,0,.2);transition:.4s;z-index:7}
+.scene .object.note{left:14%;bottom:29%;transform:rotate(-7deg)}
+.scene .object.key{right:34%;bottom:27%;background:#e2d8c5}
+.scene .object.cup{left:33%;bottom:31%;background:#f2d9ff}
+.scene.actioned .object.note{transform:translateY(-22px) rotate(4deg)}
+.scene.actioned .object.key{transform:translateY(-24px) rotate(-8deg)}
+.scene.actioned .object.cup{transform:translateY(-30px)}
 
+.story-pov{position:absolute;inset:0;z-index:5;pointer-events:none;overflow:hidden}
+.story-layer{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center bottom;pointer-events:none;user-select:none}
+.story-base{z-index:1}.story-top{z-index:2}.story-pants{z-index:3}.story-shoes{z-index:4}
+.scene-label{position:absolute;z-index:8;left:16px;top:16px;max-width:68%;padding:9px 12px;border-radius:12px;background:rgba(10,7,22,.6);border:1px solid rgba(255,255,255,.11);font-size:.83rem;z-index:6}
+.pov-hint{position:absolute;bottom:13px;left:50%;transform:translateX(-50%);padding:7px 12px;border-radius:999px;background:rgba(0,0,0,.35);font-size:.76rem;color:#fff;z-index:7}
+.story-copy{padding:20px 4px 0}.story-copy p{font-size:1.03rem;color:#f4edf9}
+.choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px}
+.choice{width:100%;text-align:left;background:rgba(255,255,255,.055);color:var(--text);border:1px solid var(--line)}
+.choice strong{display:block;margin-bottom:5px}.choice span{display:block;color:var(--muted);font-size:.87rem;line-height:1.35}
+.star-guide{position:fixed;right:16px;bottom:16px;z-index:50;display:flex;align-items:flex-end;gap:8px;pointer-events:none;max-width:min(360px,calc(100% - 32px))}
+.star-guide img{width:74px;height:74px;object-fit:contain;filter:drop-shadow(0 8px 18px rgba(0,0,0,.35));animation:starBob 3.2s ease-in-out infinite}.star-fallback-small{font-size:3.4rem;animation:starBob 3.2s ease-in-out infinite}.star-bubble{background:rgba(13,8,32,.93);border:1px solid var(--line);border-radius:16px 16px 4px 16px;padding:10px 12px;color:#fff;box-shadow:var(--shadow);font-size:.86rem;line-height:1.35}
+@keyframes starBob{50%{transform:translateY(-5px) rotate(-2deg)}}
+.result-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:20px}.trait{padding:16px;border-radius:18px;background:rgba(255,255,255,.045);border:1px solid var(--line)}.trait h3{margin-bottom:5px}.meter{height:8px;background:rgba(255,255,255,.07);border-radius:99px;overflow:hidden}.meter span{display:block;height:100%;background:linear-gradient(90deg,#d8b8ff,#ffd86b);width:0}
+.source-box{margin-top:22px;padding:16px;border-radius:18px;background:rgba(255,255,255,.035);border:1px solid var(--line)}.source-box a{color:#e4caff}
+.toast{position:fixed;left:50%;top:16px;transform:translateX(-50%) translateY(-20px);opacity:0;pointer-events:none;z-index:100;background:#21164a;color:#fff;border:1px solid var(--line);padding:11px 14px;border-radius:999px;transition:.25s;box-shadow:var(--shadow);font-size:.87rem}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.error-box{padding:14px;border-radius:14px;background:rgba(255,158,170,.08);border:1px solid rgba(255,158,170,.26);color:#ffd8dd;margin-top:12px}
+@media (max-width:760px){
+  #app{padding:10px}.screen{min-height:calc(100vh - 20px)}.inner{padding:20px}.hero{grid-template-columns:1fr;padding:22px}.hero-art{min-height:150px;order:-1}.star-img{width:150px;height:150px}.star-fallback{font-size:6rem}
+  .gender-grid,.closet-layout,.result-grid{grid-template-columns:1fr}.preview{min-height:470px}.choices{grid-template-columns:1fr}.story .inner{padding:16px}.scene{min-height:390px}.star-guide{right:10px;bottom:10px;max-width:calc(100% - 20px)}.star-guide img{width:58px;height:58px}.story-copy p{font-size:.98rem}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="app">
+  <section id="introScreen" class="screen active">
+    <div class="shell panel"><div class="hero">
+      <div>
+        <div class="kicker">Moonreya · experiencia interactiva</div>
+        <h1>Descubre algo de ti hoy.</h1>
+        <p>No es un test. Entra en una pequeña historia, toma decisiones y observa lo que haces cuando nadie te dice qué elegir.</p>
+        <p class="small">Tus decisiones se combinan al final en un patrón de rasgos basado en el modelo Big Five. No es una prueba psicológica validada ni un diagnóstico.</p>
+        <div class="actions"><button id="startButton" class="primary">✦ Empezar</button><button id="musicButton" class="ghost" aria-pressed="false">♫ Música: apagada</button></div>
+      </div>
+      <div class="hero-art"><img id="heroStar" class="star-img" src="file_00000000779481f5846ee7489906e063.png" alt="Estrella de Moonreya"><div id="heroFallback" class="star-fallback" hidden>✦</div></div>
+    </div></div>
+  </section>
+
+  <section id="genderScreen" class="screen">
+    <div class="shell panel"><div class="inner">
+      <div class="kicker">Paso 1 · perspectiva</div><h2>¿Desde qué perspectiva quieres vivir la historia?</h2><p>Solo cambia la base visual de primera persona. La historia y sus interpretaciones no dependen de elegir chica o chico.</p>
+      <div class="gender-grid">
+        <div class="gender-card"><div class="gender-art">♀</div><h3>Chica</h3><p class="small">Base POV femenina.</p><button class="primary genderButton" data-gender="chica">Elegir chica</button></div>
+        <div class="gender-card"><div class="gender-art">♂</div><h3>Chico</h3><p class="small">Base POV masculina.</p><button class="primary genderButton" data-gender="chico">Elegir chico</button></div>
+      </div>
+      <div class="actions"><button class="ghost backButton">← Volver</button></div>
+    </div></div>
+  </section>
+
+  <section id="closetScreen" class="screen">
+    <div class="shell panel"><div class="inner">
+      <div class="kicker">Paso 2 · tu apariencia</div><h2>Elige cómo entrarás a Moonreya.</h2><p>La ropa está aquí para personalizar tu POV y aportar un detalle pequeño al patrón general, no para decidir tu resultado.</p>
+      <div class="closet-layout">
+        <div class="preview" aria-label="Vista en primera persona"><div id="imageLoading" class="loading">Preparando tu POV…</div><img id="basePreview" class="character-layer base-layer" alt="Vista en primera persona del personaje"><img id="topPreview" class="character-layer top-layer" alt="Prenda superior"><img id="pantsPreview" class="character-layer pants-layer" alt="Pantalón"><img id="shoesPreview" class="character-layer shoes-layer" alt="Calzado"></div>
+        <div class="outfit-card">
+          <div id="closetStatus" class="status" aria-live="polite"></div>
+          <div class="option-group"><h3>Parte superior</h3><div id="topOptions" class="option-row"></div></div>
+          <div class="option-group"><h3>Pantalón</h3><div id="pantsOptions" class="option-row"></div></div>
+          <div class="option-group"><h3>Tenis</h3><div id="shoesOptions" class="option-row"></div></div>
+          <div class="actions"><button id="continueButton" class="primary" disabled>Entrar a la historia →</button><button id="closetBackButton" class="ghost">← Atrás</button></div>
+          <p class="small">Si una prenda tarda, Moonreya intenta limpiar automáticamente su fondo de tablero antes de mostrarla.</p>
+        </div>
+      </div>
+    </div></div>
+  </section>
+
+  <section id="storyScreen" class="screen">
+    <div class="shell panel"><div class="inner story">
+      <div class="story-head"><div><div class="kicker" id="sceneKicker">Historia</div><h2 id="sceneTitle">…</h2></div><button id="storyMusicButton" class="ghost">♫</button></div>
+      <div class="progress"><span id="progressBar"></span></div>
+      <div id="sceneVisual" class="scene"><div class="scene-sky"></div><div class="sun"></div><div class="moon-disc"></div><div class="horizon"></div><div class="ground"></div><div id="doorObject" class="door" hidden></div><div id="branchOne" class="branch" hidden></div><div id="branchTwo" class="branch two" hidden></div><div id="noteObject" class="object note" hidden>NOTA</div><div id="keyObject" class="object key" hidden>LLAVE</div><div id="cupObject" class="object cup" hidden>☕</div><div class="story-pov" aria-hidden="true"><img id="storyBase" class="story-layer story-base"><img id="storyTop" class="story-layer story-top"><img id="storyPants" class="story-layer story-pants"><img id="storyShoes" class="story-layer story-shoes"></div><div id="sceneLabel" class="scene-label">Moonreya</div><div class="pov-hint">Mira, actúa y sigue.</div></div>
+      <div class="story-copy"><p id="sceneText">…</p><div id="choices" class="choices"></div></div>
+      <div class="actions"><button id="storyBackButton" class="ghost">← Atrás</button><button id="homeButton" class="ghost">Salir</button></div>
+    </div></div>
+  </section>
+
+  <section id="resultScreen" class="screen">
+    <div class="shell panel"><div class="inner">
+      <div class="kicker">Tu cierre · Moonreya</div><h2 id="resultTitle">Tu patrón de elecciones</h2><p id="resultIntro">…</p>
+      <div id="resultGrid" class="result-grid"></div>
+      <div class="source-box"><strong>¿De dónde sale esto?</strong><p class="small">La interpretación usa los cinco grandes factores de personalidad (Big Five) como marco descriptivo. La literatura muestra diferencias promedio entre grupos, pero las personas dentro de cada grupo varían ampliamente; por eso este juego no convierte género, ropa o una decisión aislada en una regla.</p><p class="small">Fuentes: <a href="https://pubmed.ncbi.nlm.nih.gov/18179326/" target="_blank" rel="noopener">Schmitt et al. (2008)</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/11519935/" target="_blank" rel="noopener">Costa et al. (2001)</a> · <a href="https://www.ipip.ori.org/" target="_blank" rel="noopener">IPIP</a>.</p></div>
+      <div class="actions"><button id="replayButton" class="primary">↻ Jugar otra vez</button><button id="resultHomeButton" class="ghost">Moonreya</button></div>
+    </div></div>
+  </section>
+</div>
+
+<div id="starGuide" class="star-guide" hidden><img id="guideStar" src="file_00000000779481f5846ee7489906e063.png" alt="Estrella guía"><div id="guideFallback" class="star-fallback-small" hidden>✦</div><div id="starBubble" class="star-bubble" aria-live="polite"></div></div>
+<div id="toast" class="toast" aria-live="polite"></div>
+
+<script>
+"use strict";
+const ASSET_FOLDER = "";
+const STAR_FILE = "file_00000000779481f5846ee7489906e063.png";
+const screens = ["introScreen","genderScreen","closetScreen","storyScreen","resultScreen"];
+const $ = id => document.getElementById(id);
+const state = {
+  gender:null, outfit:{top:null,pants:null,shoes:null}, sceneIndex:0, choices:[], scores:{O:0,C:0,E:0,A:0,N:0},
+  music:false, lastSceneIndex:-1, result:null
+};
+const scoresEmpty = () => ({O:0,C:0,E:0,A:0,N:0});
+
+const OUTFITS = {
+  chica:{
+    base:"pov_chica_base.png",
+    top:[
+      {name:"Camisa blanca",file:"Camisa blanca chica.png",mod:{O:.05,C:.02,E:0,A:.02,N:0}},
+      {name:"Chaqueta morada",file:"Chaqueta morada chica.png",mod:{O:.05,C:0,E:.03,A:0,N:.01}},
+      {name:"Sudadera blanca",file:"Sudadera blanca chicq.png",mod:{O:.03,C:.02,E:0,A:.03,N:.01}}
+    ],
+    pants:[
+      {name:"Pantalón liso",file:"Pantalón liso chica.png",mod:{O:0,C:.03,E:0,A:.02,N:0}},
+      {name:"Pantalón recto",file:"Pantalón recto chica.png",mod:{O:.02,C:.03,E:0,A:0,N:0}},
+      {name:"Cargo marrón",file:"Cargo marrón chica.png",mod:{O:.04,C:.01,E:.01,A:0,N:0}}
+    ],
+    shoes:[
+      {name:"Tenis blancos",file:"Tenis blancos chica.png",mod:{O:0,C:.01,E:.01,A:.01,N:0}},
+      {name:"Tenis negros",file:"Tenis negros chica.png",mod:{O:.02,C:0,E:.02,A:0,N:.01}},
+      {name:"Tenis de chica",file:"Tenis de chica.png",mod:{O:.03,C:.01,E:.02,A:.01,N:0}}
+    ]
+  },
+  chico:{
+    base:"Pov_chico_base.png",
+    top:[
+      {name:"Hoddie",file:"Hoddie hombre.png",mod:{O:.03,C:.01,E:0,A:.03,N:.01}},
+      {name:"Camisa",file:"Camisa hombre.png",mod:{O:0,C:.03,E:.02,A:.01,N:0}},
+      {name:"Camisa blanca",file:"Camisa blanca hombre.png",mod:{O:.01,C:.04,E:.01,A:.01,N:0}}
+    ],
+    pants:[
+      {name:"Pantalón recto",file:"Pantalón recto hombre.png",mod:{O:0,C:.03,E:0,A:.02,N:0}},
+      {name:"Cargo marrón",file:"Cargo marrón hombre.png",mod:{O:.03,C:.01,E:.01,A:0,N:0}},
+      {name:"Cargo negro",file:"Cargo negro hombre.png",mod:{O:.02,C:.01,E:.02,A:0,N:.01}}
+    ],
+    shoes:[
+      {name:"Tenis crema",file:"tenis crema hombre.png",mod:{O:.02,C:.01,E:.01,A:.02,N:0}},
+      {name:"Tenis negro",file:"Tenis negro hombre.png",mod:{O:.01,C:.01,E:.02,A:0,N:.01}},
+      {name:"Tenis blancos",file:"Tenis blancos hombre.png",mod:{O:0,C:.01,E:.01,A:.02,N:0}}
+    ]
+  }
+};
+
+const SCENES = [
+  {kicker:"1 · La salida",title:"Una puerta que no tenías planeada",text:"Terminas una tarde normal y ves una puerta pequeña al final del pasillo. No sabes por qué está ahí. Tu mano ya está cerca del picaporte.",visual:"warm",decor:"door",choices:[
+    {label:"Abrir ahora",hint:"Quieres saber qué hay detrás.",delta:{O:2,E:1,N:0,C:0,A:0},action:"openDoor",reaction:"Bueno… eso salió exactamente como NO esperaba."},
+    {label:"Mirar primero",hint:"Observas el espacio antes de tocar.",delta:{O:1,C:1,N:0,E:0,A:0},action:"inspectDoor",reaction:"Ok. Vienes con plan. Interesante."}
+  ]},
+  {kicker:"2 · El papel",title:"Una nota cayó al suelo",text:"Al acercarte encuentras una nota. No tiene nombre. Dice: “No tienes que demostrar nada. Solo decide qué te importa en este momento.”",visual:"warm",decor:"note",choices:[
+    {label:"Guardarla",hint:"Puede servirte después.",delta:{O:1,C:1,E:0,A:0,N:0},action:"takeNote",reaction:"Yo no estaba mirando. Tú tampoco viste nada."},
+    {label:"Dejarla",hint:"No quieres cargar con algo ajeno.",delta:{O:0,C:0,E:1,A:1,N:0},action:"leaveNote",reaction:"Limpio. Sin equipaje emocional innecesario."}
+  ]},
+  {kicker:"3 · Dos caminos",title:"La ruta se divide",text:"Afuera hay dos caminos. Uno está iluminado y parece sencillo. El otro es más estrecho y tiene señales que no alcanzas a leer desde aquí.",visual:"forest",decor:"branches",choices:[
+    {label:"Camino iluminado",hint:"Prefieres una ruta clara.",delta:{O:0,C:1,E:1,A:0,N:-1},action:"brightPath",reaction:"Decisión práctica. La estrella aprueba… discretamente."},
+    {label:"Camino estrecho",hint:"La incertidumbre también te interesa.",delta:{O:2,C:0,E:0,A:0,N:1},action:"narrowPath",reaction:"¿En serio? Bueno. Respeto el caos."}
+  ]},
+  {kicker:"4 · La elección social",title:"Alguien necesita una mano",text:"Más adelante encuentras a una persona intentando recoger unas cosas que se le cayeron. Tienes tiempo de sobra para seguir, pero claramente podrías ayudar.",visual:"forest",decor:"cup",choices:[
+    {label:"Ayudar",hint:"Te acercas sin pensarlo demasiado.",delta:{A:2,E:0,O:0,C:1,N:-1},action:"helpPerson",reaction:"Ah. Eso fue bastante considerado."},
+    {label:"Seguir",hint:"Ya tienes algo en mente y mantienes tu rumbo.",delta:{C:1,E:1,O:0,A:-1,N:0},action:"keepGoing",reaction:"No voy a decir nada… pero tengo preguntas."}
+  ]},
+  {kicker:"5 · La puerta cerrada",title:"Ahora sí: la llave",text:"Llegas a una puerta más antigua. Hay una llave cerca, pero no sabes si abre esta puerta. Nadie te está esperando y no hay instrucciones.",visual:"moon",decor:"key",choices:[
+    {label:"Probar la llave",hint:"Vale la pena comprobarlo.",delta:{O:1,E:1,C:0,A:0,N:0},action:"useKey",reaction:"Momento… ¿qué acabas de hacer?"},
+    {label:"Buscar otra entrada",hint:"Prefieres entender el sistema antes.",delta:{O:1,C:2,E:0,A:0,N:-1},action:"findOtherEntry",reaction:"Bueno, técnicamente… funcionó."}
+  ]},
+  {kicker:"6 · Lo que eliges guardar",title:"Una habitación llena de objetos",text:"La puerta conduce a una habitación tranquila. Hay una fotografía, una libreta y una ventana abierta. Solo puedes llevarte una cosa.",visual:"moon",decor:"room",choices:[
+    {label:"La fotografía",hint:"Te atrae la historia que sugiere.",delta:{O:1,E:0,A:2,C:0,N:1},action:"takePhoto",reaction:"Eso dice más de ti de lo que parece."},
+    {label:"La libreta",hint:"Te interesa descubrir lo que contiene.",delta:{O:2,C:1,E:0,A:0,N:0},action:"takeNotebook",reaction:"Sí. Curiosidad con evidencia. Me gusta el método."}
+  ]},
+  {kicker:"7 · El silencio",title:"Puedes volver o continuar",text:"La experiencia podría terminar aquí. La salida está abierta. Pero una última puerta deja entrar una corriente de aire y se oyen campanitas al otro lado.",visual:"moon",decor:"exit",choices:[
+    {label:"Volver",hint:"Prefieres cerrar la experiencia aquí.",delta:{C:1,N:-1,E:0,O:0,A:1},action:"goBack",reaction:"Cerrar un ciclo también es una elección."},
+    {label:"Continuar",hint:"Todavía quieres descubrir qué hay.",delta:{O:2,E:1,C:0,A:0,N:1},action:"continue",reaction:"Ah. Sabía que faltaba algo."}
+  ]},
+  {kicker:"8 · Tu decisión real",title:"No hay respuesta correcta",text:"Frente a ti hay una última elección: hacer lo que esperas de ti misma/o o hacer aquello que realmente te da curiosidad ahora. Nadie verá tu respuesta.",visual:"warm",decor:"exit",choices:[
+    {label:"Lo que espero de mí",hint:"Eliges según tu propia regla.",delta:{C:2,A:0,E:0,O:0,N:-1},action:"selfRule",reaction:"Eso sí que es tomar una decisión con intención."},
+    {label:"Lo que me da curiosidad",hint:"Te permites seguir el impulso de explorar.",delta:{O:2,E:1,C:0,A:0,N:0},action:"curiosity",reaction:"Ok. Decisión cuestionable. Continuemos."}
+  ]}
+];
+
+function showScreen(id){screens.forEach(s => $(s).classList.toggle("active",s===id));window.scrollTo({top:0,behavior:"smooth"});}
+function toast(msg){$("toast").textContent=msg;$("toast").classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>$("toast").classList.remove("show"),1900)}
+function asset(file){return ASSET_FOLDER+file}
+function setImg(el,file,onReady,onError){el.onload=()=>{el.hidden=false;if(onReady)onReady()};el.onerror=()=>{el.hidden=true;if(onError)onError()};el.src=asset(file)}
+function resetState(){state.gender=null;state.outfit={top:null,pants:null,shoes:null};state.sceneIndex=0;state.choices=[];state.scores=scoresEmpty();state.lastSceneIndex=-1;state.result=null}
+
+function setupStarImages(){
+  ["heroStar","guideStar"].forEach(id=>{const img=$(id);img.src=asset(STAR_FILE);img.onerror=()=>{img.hidden=true;if(id==="heroStar")$("heroFallback").hidden=false;else $("guideFallback").hidden=false}})
+}
+function showStar(text){
+  $("starGuide").hidden=false;$("starBubble").textContent=text;
+  const el=$("starGuide");el.animate([{transform:"translateX(14px) scale(.96)"},{transform:"translateX(0) scale(1)"}],{duration:280,easing:"ease-out"});
+}
+function hideStar(){ $("starGuide").hidden=true }
+
+function renderOptions(){
+  const data=OUTFITS[state.gender];
+  ["top","pants","shoes"].forEach(kind=>{
+    const root=$(kind+"Options");root.innerHTML="";
+    data[kind].forEach((item,i)=>{
+      const b=document.createElement("button");b.type="button";b.className="choice";b.dataset.kind=kind;b.dataset.index=i;
+      b.innerHTML="<strong>"+item.name+"</strong><span>Elegir</span>";
+      b.addEventListener("click",()=>selectOutfit(kind,i));root.appendChild(b);
+    });
+  });
+  loadBase();
+}
+function selectOutfit(kind,index){
+  const item=OUTFITS[state.gender][kind][index];state.outfit[kind]=item;
+  document.querySelectorAll('[data-kind="'+kind+'"]').forEach(b=>b.classList.remove("selected"));
+  const selected=document.querySelector('[data-kind="'+kind+'"][data-index="'+index+'"]');if(selected)selected.classList.add("selected");
+  const target=$(kind+"Preview");target.hidden=false;target.style.opacity=".22";
+  processClothing(asset(item.file),target,()=>{target.style.opacity="1"},()=>{target.src=asset(item.file);target.style.opacity="1"});
+  $("closetStatus").textContent="";
+  $("continueButton").disabled=!(state.outfit.top&&state.outfit.pants&&state.outfit.shoes);
+}
+function loadBase(){
+  const img=$("basePreview");img.hidden=true;$("imageLoading").hidden=false;
+  setImg(img,OUTFITS[state.gender].base,()=>{$("imageLoading").hidden=true},()=>{$("imageLoading").hidden=true;$("closetStatus").textContent="No se encontró la base POV: "+OUTFITS[state.gender].base})
+}
+function processClothing(url,target,success,failure){
+  const image=new Image();image.crossOrigin="anonymous";
+  image.onload=()=>{
+    try{
+      const canvas=document.createElement("canvas"),ctx=canvas.getContext("2d",{willReadFrequently:true});canvas.width=image.naturalWidth;canvas.height=image.naturalHeight;ctx.drawImage(image,0,0);
+      const data=ctx.getImageData(0,0,canvas.width,canvas.height);removeCheckerBackground(data);ctx.putImageData(data,0,0);target.src=canvas.toDataURL("image/png");success();
+    }catch(e){failure(e)}
+  };
+  image.onerror=()=>failure(new Error("No se pudo cargar "+url));image.src=url;
+}
+function removeCheckerBackground(imageData){
+  const d=imageData.data,w=imageData.width,h=imageData.height;
+  const q=v=>Math.round(v/16)*16;
+  const samples=[];
+  const margin=Math.max(2,Math.floor(Math.min(w,h)*.03));
+  for(let y=0;y<Math.min(h,Math.max(10,margin*3));y++)for(let x=0;x<w;x+=Math.max(1,Math.floor(w/40))){let i=(y*w+x)*4;samples.push([q(d[i]),q(d[i+1]),q(d[i+2])])}
+  for(let y=Math.max(0,h-margin*3);y<h;y++)for(let x=0;x<w;x+=Math.max(1,Math.floor(w/40))){let i=(y*w+x)*4;samples.push([q(d[i]),q(d[i+1]),q(d[i+2])])}
+  const count=new Map();samples.forEach(s=>{const k=s.join(",");count.set(k,(count.get(k)||0)+1)});
+  const bg=[...count.entries()].sort((a,b)=>b[1]-a[1]).slice(0,6).map(x=>x[0].split(",").map(Number));
+  function nearBG(i){const r=d[i],g=d[i+1],b=d[i+2];const lowSat=Math.max(r,g,b)-Math.min(r,g,b)<52;const bright=(r+g+b)/3>135;const close=bg.some(c=>Math.hypot(r-c[0],g-c[1],b-c[2])<34);return close||(lowSat&&bright)}
+  const seen=new Uint8Array(w*h),queue=[];
+  for(let y=0;y<h;y++){[0,w-1].forEach(x=>{const p=y*w+x;if(!seen[p]){const i=p*4;if(nearBG(i)){seen[p]=1;queue.push(p)}}})}
+  for(let x=0;x<w;x++){[0,h-1].forEach(y=>{const p=y*w+x;if(!seen[p]){const i=p*4;if(nearBG(i)){seen[p]=1;queue.push(p)}}})}
+  let qi=0;while(qi<queue.length){const p=queue[qi++],x=p%w,y=(p/w)|0,i=p*4;d[i+3]=0;const n=[p-1,p+1,p-w,p+w];for(const np of n){if(np<0||np>=w*h)continue;const nx=np%w;if(Math.abs(nx-x)>1)continue;if(seen[np])continue;const ni=np*4;if(nearBG(ni)){seen[np]=1;queue.push(np)}}}
+}
+
+function applyOutfitScores(){
+  ["top","pants","shoes"].forEach(kind=>{const item=state.outfit[kind];if(!item)return;for(const k of Object.keys(item.mod))state.scores[k]+=item.mod[k]});
+}
+function updateSceneVisual(scene){
+  const v=$("sceneVisual");v.className="scene "+scene.visual;["doorObject","branchOne","branchTwo","noteObject","keyObject","cupObject"].forEach(id=>$(id).hidden=true);v.classList.remove("actioned");
+  if(scene.decor==="door")$("doorObject").hidden=false;if(scene.decor==="branches"){$("branchOne").hidden=false;$("branchTwo").hidden=false}if(scene.decor==="note")$("noteObject").hidden=false;if(scene.decor==="key")$("keyObject").hidden=false;if(scene.decor==="cup")$("cupObject").hidden=false;
+  $("sceneLabel").textContent=state.gender==="chica"?"Moonreya · POV chica":"Moonreya · POV chico";
+}
+function renderScene(){
+  const s=SCENES[state.sceneIndex];state.lastSceneIndex=state.sceneIndex;$("sceneKicker").textContent=s.kicker;$("sceneTitle").textContent=s.title;$("sceneText").textContent=s.text;updateSceneVisual(s);$("progressBar").style.width=((state.sceneIndex)/SCENES.length*100)+"%";
+  const root=$("choices");root.innerHTML="";
+  s.choices.forEach((c,i)=>{const b=document.createElement("button");b.type="button";b.className="choice";b.innerHTML="<strong>"+c.label+"</strong><span>"+c.hint+"</span>";b.addEventListener("click",()=>chooseScene(i));root.appendChild(b)});
+  if(state.sceneIndex===0)showStar("No voy a decir nada… pero tengo preguntas.");
+  else hideStar();
+}
+function animateAction(action){
+  const v=$("sceneVisual");v.classList.add("actioned");
+  if(action==="openDoor"){const d=$("doorObject");if(d.hidden)d.hidden=false;requestAnimationFrame(()=>d.classList.add("open"))}
+  if(action==="inspectDoor"){const d=$("doorObject");if(d.hidden)d.hidden=false;d.style.transform="scale(1.04)";}
+  if(action==="takeNote")$("noteObject").style.transform="translateY(-30px) scale(.9) rotate(5deg)";
+  if(action==="leaveNote")$("noteObject").style.opacity=".45";
+  if(action==="brightPath"){$("branchOne").style.transform="rotate(-8deg) scale(1.08)"}
+  if(action==="narrowPath"){$("branchTwo").style.transform="rotate(12deg) scale(1.08)"}
+  if(action==="useKey"){$("keyObject").style.transform="translateY(-10px) rotate(-22deg)"}
+  if(action==="findOtherEntry"){$("keyObject").style.opacity=".45"}
+  if(action==="takePhoto"||action==="takeNotebook"){$("cupObject").style.transform="translateY(-10px)"}
+}
+function chooseScene(index){
+  const scene=SCENES[state.sceneIndex],choice=scene.choices[index];state.choices.push({scene:state.sceneIndex,index,label:choice.label});
+  for(const k of Object.keys(choice.delta))state.scores[k]+=choice.delta[k];animateAction(choice.action);showStar(choice.reaction);toast(choice.label);
+  setTimeout(()=>{
+    state.sceneIndex++;
+    if(state.sceneIndex>=SCENES.length){finishGame();return}
+    renderScene();
+  },650);
+}
+function calculateResult(){
+  applyOutfitScores();
+  const values={};for(const k of Object.keys(state.scores))values[k]=state.scores[k];
+  const labels={O:"apertura a la experiencia",C:"responsabilidad y orden",E:"extraversión",A:"amabilidad",N:"sensibilidad emocional"};
+  const ordered=Object.entries(values).sort((a,b)=>b[1]-a[1]);
+  const top=ordered[0][0],second=ordered[1][0];
+  const profiles={
+    O:"La persona exploradora",C:"La persona estructurada",E:"La persona activa",A:"La persona considerada",N:"La persona sensible"
+  };
+  const descriptions={
+    O:"Tu recorrido acumuló varias decisiones de curiosidad, novedad y exploración. En términos del Big Five, ese patrón puede ser compatible con mayor apertura a nuevas experiencias.",
+    C:"Tu recorrido acumuló varias decisiones de planificación, constancia y atención a reglas propias. Ese patrón puede ser compatible con mayor responsabilidad y organización.",
+    E:"Tu recorrido acumuló varias decisiones de acción, movimiento y contacto con el entorno. Ese patrón puede ser compatible con mayor extraversión.",
+    A:"Tu recorrido acumuló decisiones que priorizaron cooperación, consideración y vínculo. Ese patrón puede ser compatible con mayor amabilidad.",
+    N:"Tu recorrido acumuló elecciones que prestaron más atención a incertidumbre y significado emocional. Ese patrón puede ser compatible con mayor sensibilidad emocional."
+  };
+  return {top,second,profile:profiles[top],description:descriptions[top],values,labels};
+}
+function finishGame(){
+  const r=calculateResult();state.result=r;$("resultTitle").textContent=r.profile;$("resultIntro").textContent=r.description+" Tu segunda tendencia más marcada en esta partida fue "+r.labels[r.second]+".";
+  const grid=$("resultGrid");grid.innerHTML="";const max=14;
+  ["O","C","E","A","N"].forEach(k=>{const val=Math.max(-1,Math.min(max,state.scores[k]));const pct=Math.round(((val+1)/(max+1))*100);const div=document.createElement("div");div.className="trait";div.innerHTML="<h3>"+r.labels[k]+"</h3><p class=\"small\">Patrón de esta partida</p><div class=\"meter\"><span style=\"width:"+pct+"%\"></span></div>";grid.appendChild(div)});
+  $("progressBar").style.width="100%";hideStar();showScreen("resultScreen");toast("Historia completada");
+}
+
+function startGame(){resetState();showScreen("genderScreen");hideStar()}
+function enterCloset(gender){state.gender=gender;state.outfit={top:null,pants:null,shoes:null};$("topPreview").hidden=true;$("pantsPreview").hidden=true;$("shoesPreview").hidden=true;showScreen("closetScreen");renderOptions();toast(gender==="chica"?"POV chica listo":"POV chico listo")}
+function syncStoryPOV(){
+  const base=$("basePreview");const top=$("topPreview");const pants=$("pantsPreview");const shoes=$("shoesPreview");
+  $("storyBase").src=base.src;$("storyTop").src=top.src;$("storyPants").src=pants.src;$("storyShoes").src=shoes.src;
+}
+function enterStory(){if(!state.outfit.top||!state.outfit.pants||!state.outfit.shoes){$("closetStatus").textContent="Elige una opción en las tres categorías antes de continuar.";return}state.sceneIndex=0;state.choices=[];state.scores=scoresEmpty();syncStoryPOV();showScreen("storyScreen");renderScene()}
+function backFromStory(){if(state.sceneIndex>0){state.sceneIndex--;state.choices.pop();renderScene();return}showScreen("closetScreen");hideStar()}
+function goHome(){window.location.href="índice.html"}
+
+function startAmbient(){try{const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;const ctx=ambient.ctx||(ambient.ctx=new AC());if(ctx.state==="suspended")ctx.resume();if(ambient.timer)clearInterval(ambient.timer);const play=()=>{const now=ctx.currentTime;[261.63,329.63,392].forEach((freq,i)=>{const o=ctx.createOscillator(),g=ctx.createGain();o.type=i===1?"triangle":"sine";o.frequency.value=freq*(i===2?0.5:1);g.gain.setValueAtTime(.0001,now);g.gain.exponentialRampToValueAtTime(.012/(i+1),now+.35);g.gain.exponentialRampToValueAtTime(.0001,now+3.8);o.connect(g).connect(ctx.destination);o.start(now);o.stop(now+3.9)});};play();ambient.timer=setInterval(play,4000)}catch(e){}}
+function stopAmbient(){if(ambient.timer){clearInterval(ambient.timer);ambient.timer=null}}
+const ambient={ctx:null,timer:null};
+function toggleMusic(){state.music=!state.music;["musicButton","storyMusicButton"].forEach(id=>{const b=$(id);if(b){b.textContent=state.music?"♫ Música: encendida":"♫ Música: apagada";b.setAttribute("aria-pressed",String(state.music))}});if(state.music)startAmbient();else stopAmbient();toast(state.music?"Música activada después de tu interacción":"Música apagada")}
+
+setupStarImages();
+$("startButton").addEventListener("click",startGame);
+$("musicButton").addEventListener("click",toggleMusic);
+$("storyMusicButton").addEventListener("click",toggleMusic);
+$("continueButton").addEventListener("click",enterStory);
+$("closetBackButton").addEventListener("click",()=>{showScreen("genderScreen");hideStar()});
+$("storyBackButton").addEventListener("click",backFromStory);
+$("homeButton").addEventListener("click",goHome);
+$("resultHomeButton").addEventListener("click",goHome);
+$("replayButton").addEventListener("click",startGame);
+document.querySelectorAll(".genderButton").forEach(b=>b.addEventListener("click",()=>enterCloset(b.dataset.gender)));
+document.querySelectorAll(".backButton").forEach(b=>b.addEventListener("click",()=>showScreen("introScreen")));
+
+window.addEventListener("keydown",e=>{
+  if(e.key==="Escape"){
+    if($("storyScreen").classList.contains("active"))backFromStory();
+    else if($("closetScreen").classList.contains("active"))showScreen("genderScreen");
+    else if($("genderScreen").classList.contains("active"))showScreen("introScreen");
+  }
+});
+</script>
+</body>
+</html>
