@@ -1254,5 +1254,216 @@ const shoesOptions = document.getElementById("shoesOptions");
 
   </script>
 
+  /* ============================================================
+   MOONREYA — LIMPIEZA AUTOMÁTICA DEL FONDO DE LAS PRENDAS
+   Convierte el fondo cuadriculado de los PNG en transparente.
+   ============================================================ */
+
+function removeCheckerboardBackground(image) {
+
+  if (!image || image.dataset.cleaned === "true") {
+    return;
+  }
+
+  if (!image.complete || !image.naturalWidth) {
+    return;
+  }
+
+  const canvas = document.createElement("canvas");
+  const context = canvas.getContext("2d", {
+    willReadFrequently: true
+  });
+
+  if (!context) {
+    return;
+  }
+
+  canvas.width = image.naturalWidth;
+  canvas.height = image.naturalHeight;
+
+  context.drawImage(
+    image,
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+  const imageData = context.getImageData(
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+  const pixels = imageData.data;
+
+  /*
+    Colores aproximados del fondo cuadriculado
+    que tienen tus imágenes.
+  */
+
+  const backgroundColors = [
+    [70, 65, 62],
+    [141, 133, 130]
+  ];
+
+  const tolerance = 28;
+
+  function colorDistance(r, g, b, color) {
+
+    const dr = r - color[0];
+    const dg = g - color[1];
+    const db = b - color[2];
+
+    return Math.sqrt(
+      dr * dr +
+      dg * dg +
+      db * db
+    );
+  }
+
+  function looksLikeBackground(r, g, b) {
+
+    for (const color of backgroundColors) {
+
+      if (
+        colorDistance(r, g, b, color) <= tolerance
+      ) {
+        return true;
+      }
+
+    }
+
+    return false;
+  }
+
+  /*
+    Primero eliminamos los píxeles claramente pertenecientes
+    al patrón cuadriculado.
+  */
+
+  for (let i = 0; i < pixels.length; i += 4) {
+
+    const r = pixels[i];
+    const g = pixels[i + 1];
+    const b = pixels[i + 2];
+
+    if (looksLikeBackground(r, g, b)) {
+      pixels[i + 3] = 0;
+    }
+  }
+
+  context.putImageData(imageData, 0, 0);
+
+  /*
+    Sustituimos la imagen original por la versión procesada.
+  */
+
+  image.src = canvas.toDataURL("image/png");
+
+  image.dataset.cleaned = "true";
+}
+
+
+/* ------------------------------------------------------------
+   Procesar imágenes que ya existen
+   ------------------------------------------------------------ */
+
+function cleanExistingClothingImages() {
+
+  const images = document.querySelectorAll(
+    ".item-thumbnail, .character-layer"
+  );
+
+  images.forEach(function(image) {
+
+    if (image.complete) {
+      removeCheckerboardBackground(image);
+    } else {
+      image.addEventListener(
+        "load",
+        function() {
+          removeCheckerboardBackground(image);
+        },
+        { once: true }
+      );
+    }
+
+  });
+
+}
+
+
+/* ------------------------------------------------------------
+   Detectar nuevas miniaturas creadas por JavaScript
+   ------------------------------------------------------------ */
+
+const clothingObserver = new MutationObserver(
+  function(mutations) {
+
+    mutations.forEach(function(mutation) {
+
+      mutation.addedNodes.forEach(function(node) {
+
+        if (node.nodeType !== Node.ELEMENT_NODE) {
+          return;
+        }
+
+        if (node.matches && node.matches("img")) {
+
+          if (node.complete) {
+            removeCheckerboardBackground(node);
+          } else {
+            node.addEventListener(
+              "load",
+              function() {
+                removeCheckerboardBackground(node);
+              },
+              { once: true }
+            );
+          }
+
+        }
+
+        const images = node.querySelectorAll
+          ? node.querySelectorAll(
+              ".item-thumbnail, .character-layer"
+            )
+          : [];
+
+        images.forEach(function(image) {
+
+          if (image.complete) {
+            removeCheckerboardBackground(image);
+          } else {
+            image.addEventListener(
+              "load",
+              function() {
+                removeCheckerboardBackground(image);
+              },
+              { once: true }
+            );
+          }
+
+        });
+
+      });
+
+    });
+
+  }
+);
+
+clothingObserver.observe(
+  document.body,
+  {
+    childList: true,
+    subtree: true
+  }
+);
+
+</script>
+    
 </body>
 </html>
